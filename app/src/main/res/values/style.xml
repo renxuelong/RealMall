@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        // 导航栏的颜色(ActionBar/Toolbar)
+        <item name="colorPrimary">@color/colorPrimary</item>
+        // 状态栏颜色
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        // RadioButton/EditText 正在输入时的颜色
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="translucent" parent="AppTheme" />
+
+    <style name="search_view">
+        <item name="android:textSize">@dimen/search_text_size</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColorHint">@color/white</item>
+    </style>
+
+</resources>
