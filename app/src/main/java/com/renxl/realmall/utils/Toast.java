@@ -12,15 +12,19 @@ import com.renxl.realmall.application.RealMallApp;
 
 public class Toast {
 
+    private static android.widget.Toast toast;
+
     private static Context mContext;
 
     static {
         mContext = RealMallApp.getContext();
     }
 
-    public static void show(String toast) {
-        if (TextUtils.isEmpty(toast)) return;
-        android.widget.Toast.makeText(mContext, toast, android.widget.Toast.LENGTH_SHORT).show();
+    public static void show(String log) {
+
+        if (TextUtils.isEmpty(log)) return;
+        toast = android.widget.Toast.makeText(mContext, log, android.widget.Toast.LENGTH_SHORT);
+        toast.show();
     }
 
 }

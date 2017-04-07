@@ -4,4 +4,42 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="title_text_size">18sp</dimen>
     <dimen name="search_text_size">16sp</dimen>
+    <dimen name="buttonCornerSize">2dp</dimen>
+    <dimen name="inputEditTextMinHeight">32dp</dimen>
+    <dimen name="searchViewMinHeight">45dp</dimen>
+
+    <!--TextSize-->
+    <dimen name="smallestTextSize">10sp</dimen>
+    <dimen name="smallerTextSize">12sp</dimen>
+    <dimen name="smallTextSize">14sp</dimen>
+    <dimen name="normalTextSize">16sp</dimen>
+    <dimen name="largeTextSize">18sp</dimen>
+    <dimen name="largerTextSize">20sp</dimen>
+    <dimen name="largestTextSize">22sp</dimen>
+
+    <!--ButtonTextSize-->
+    <dimen name="smallButtonTextSize">12sp</dimen>
+    <dimen name="normallButtonTextSize">14sp</dimen>
+    <dimen name="bigButtonTextSize">16sp</dimen>
+
+    <!--ButtonHeight-->
+    <dimen name="smallButtonMinHeight">15dp</dimen>
+    <dimen name="normalButtonMinHeight">25dp</dimen>
+    <dimen name="largeButtonMinHeight">35dp</dimen>
+
+    <!--Padding-->
+    <dimen name="basicPaddingSize">4dp</dimen>
+    <dimen name="smallPaddingSize">6dp</dimen>
+    <dimen name="normalPaddingSize">8dp</dimen>
+    <dimen name="largePaddingSize">12sp</dimen>
+
+    <!--Margin-->
+    <dimen name="basicMarginSize">4dp</dimen>
+    <dimen name="smallMarginSize">6dp</dimen>
+    <dimen name="normalMarginSize">8dp</dimen>
+    <dimen name="largeMarginSize">12sp</dimen>
+    <dimen name="largerMarginSize">16dp</dimen>
+    <dimen name="largestMarginSize">20dp</dimen>
+
+
 </resources>

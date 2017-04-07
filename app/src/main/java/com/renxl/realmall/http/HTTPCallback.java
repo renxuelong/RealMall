@@ -10,7 +10,7 @@ import com.renxl.realmall.BuildConfig;
 public abstract class HTTPCallback<T> extends BaseCallback<T> {
 
     @Override
-    public void setMock(String mock) {
+    public void setMock(T mock) {
         mMoke = mock;
     }
 
@@ -29,7 +29,7 @@ public abstract class HTTPCallback<T> extends BaseCallback<T> {
     @Override
     public void fail(String errorMessage) {
         if (mMoke != null && BuildConfig.DEBUG) {
-
+            ok(mMoke);
         }
     }
 }

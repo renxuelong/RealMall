@@ -7,4 +7,7 @@
     <string name="mine">我的</string>
     <string name="__leak_canary_display_activity_label">RealMallLC</string>
     <string name="edit">编辑</string>
+    <string name="buynow">立即购买</string>
+    <string name="rmb">¥ %1$s</string>
+    <string name="pointtwo">%.2f</string>
 </resources>

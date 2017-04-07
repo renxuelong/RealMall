@@ -7,7 +7,7 @@ import java.util.List;
  * On 2017/4/5 16:07.
  */
 
-public class Wears {
+class Wears {
 
     /**
      * copyright : 本API接口只允许菜鸟窝(http://www.cniao5.com)用户使用,其他机构或者个人使用均为侵权行为

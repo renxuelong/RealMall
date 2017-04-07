@@ -6,6 +6,9 @@
     <color name="colorAccent">#FF4081</color>
     <color name="translucent">#00000000</color>
 
+    <color name="red_btn_normal">#ffff5454</color>
+    <color name="red_btn_pressed">#ffd24242</color>
+
     <color name="white">#FFFFFF</color><!--白色 -->
     <color name="ivory">#FFFFF0</color><!--象牙色 -->
     <color name="lightyellow">#FFFFE0</color><!--亮黄色 -->

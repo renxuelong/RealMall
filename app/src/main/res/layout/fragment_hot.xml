@@ -12,16 +12,16 @@
         android:background="@color/colorPrimaryDark"
         custom:title_search="true" />
 
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/image"
-        android:layout_width="130dp"
-        android:layout_height="130dp"
-        custom:placeholderImage="@drawable/ic_launcher" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycleview_hot"
+    <com.cjj.MaterialRefreshLayout
+        android:id="@+id/srl_hot"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycleview_hot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
+    </com.cjj.MaterialRefreshLayout>
 </LinearLayout>

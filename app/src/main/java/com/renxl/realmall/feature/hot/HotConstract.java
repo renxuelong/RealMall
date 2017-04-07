@@ -10,10 +10,12 @@ import com.renxl.realmall.base.BaseView;
 
 class HotConstract {
     interface IHotPresenter extends BasePresenter {
+        void refresh();
 
+        void loadMore();
     }
 
-    interface IHotView<T extends Object> extends BaseView<T> {
-
+    interface IHotView<T> extends BaseView<T> {
+        void loadAll();
     }
 }

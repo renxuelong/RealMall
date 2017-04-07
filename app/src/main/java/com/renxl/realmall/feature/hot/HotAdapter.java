@@ -1,51 +1,45 @@
 package com.renxl.realmall.feature.hot;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
+
+import com.renxl.realmall.R;
+import com.renxl.realmall.base.BaseAdapter;
+import com.renxl.realmall.base.BaseViewHolder;
+import com.renxl.realmall.utils.Toast;
 
 import java.util.List;
 
 /**
  * Created by renxl
- * On 2017/4/5 16:46.
+ * On 2017/4/7 10:24.
  */
 
-public class HotAdapter extends RecyclerView.Adapter<HotAdapter.HotViewHolder> {
+class HotAdapter extends BaseAdapter<Wears.ListBean> {
 
-    private List<Wears.ListBean> beanList;
-    private Context mContext;
-
-    public HotAdapter(List<Wears.ListBean> lists, Context context) {
-        beanList = lists;
-        mContext = context;
+    HotAdapter(List<Wears.ListBean> datas, Context context, int layoutId) {
+        super(datas, context, layoutId);
     }
 
+    @SuppressLint({"StringFormatMatches", "StringFormatInvalid"})
     @Override
-    public HotViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
-    }
+    public void covert(BaseViewHolder holder, Wears.ListBean item) {
+        if (!TextUtils.isEmpty(item.getImgUrl()))
+            holder.getSimpleDraweeView(R.id.img_hot_list_icon).setImageURI(item.getImgUrl());
 
-    @Override
-    public void onBindViewHolder(HotViewHolder holder, int position) {
+        if (!TextUtils.isEmpty(item.getName()))
+            holder.getTextView(R.id.tv_hot_list_name).setText(item.getName());
 
-    }
+        holder.getTextView(R.id.tv_hot_list_price).setText(String.format(mContext.getResources().getString(R.string.rmb),
+                String.format(mContext.getResources().getString(R.string.pointtwo), item.getPrice())));
 
-    @Override
-    public int getItemCount() {
-        return 0;
-    }
-
-    class HotViewHolder extends RecyclerView.ViewHolder {
-
-
-
-        public HotViewHolder(View itemView) {
-            super(itemView);
-        }
-
-
-
+        holder.getButton(R.id.btn_hot_list_add).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.show("Add");
+            }
+        });
     }
 }

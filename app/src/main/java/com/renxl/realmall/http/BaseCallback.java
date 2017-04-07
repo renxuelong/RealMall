@@ -29,7 +29,7 @@ public abstract class BaseCallback<T> {
     }
 
     // 默认的权限是包可以访问，子类跟非同一个包的不能访问，依次达到 http 包中的，HTTPCallback 可以访问，而实际的子类并不能直接使用 mMoke，只能通过 moke 方法来访问
-    String mMoke;
+    T mMoke;
     String cache;
 
     public abstract void ok(T response);
@@ -39,5 +39,5 @@ public abstract class BaseCallback<T> {
 
     public abstract void mock(T mock);
 
-    public abstract void setMock(String mock);
+    public abstract void setMock(T mock);
 }

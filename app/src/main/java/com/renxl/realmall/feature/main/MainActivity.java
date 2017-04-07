@@ -1,5 +1,6 @@
 package com.renxl.realmall.feature.main;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,7 +63,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private View getTabView(Tab tab) {
-        View view = mLayoutInflater.inflate(R.layout.tab_indecator, null);
+        @SuppressLint("InflateParams") View view = mLayoutInflater.inflate(R.layout.tab_indecator, null, false);
         ImageView imgIcon = (ImageView) view.findViewById(R.id.img_tab);
         TextView tvTitle = (TextView) view.findViewById(R.id.tv_tab);
         imgIcon.setImageResource(tab.getIcon());

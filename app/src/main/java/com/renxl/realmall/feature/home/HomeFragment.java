@@ -1,6 +1,8 @@
 package com.renxl.realmall.feature.home;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +39,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.IHomeView
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, null);
+        @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.fragment_home, null);
         unbinder = ButterKnife.bind(this, view);
         toolbarHome.setToolbarListener(new ToolBar.ToolbarListener() {
             @Override
@@ -66,6 +68,8 @@ public class HomeFragment extends BaseFragment implements HomeContract.IHomeView
     public void setData(List<Advertising> advertisings) {
         if (advertisings == null) return;
         for (final Advertising advertising : advertisings) {
+            if (TextUtils.isEmpty(advertising.getImgUrl()) || TextUtils.isEmpty(advertising.getName()))
+                return;
             final TextSliderView textSliderView = new TextSliderView(getActivity());
             textSliderView.description(advertising.getName()).image(advertising.getImgUrl()).setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
                 @Override
@@ -89,6 +93,11 @@ public class HomeFragment extends BaseFragment implements HomeContract.IHomeView
             public void onPageScrollStateChanged(int state) {
             }
         });
+
+    }
+
+    @Override
+    public void fail() {
 
     }
 

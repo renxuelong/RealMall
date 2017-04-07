@@ -7,4 +7,5 @@ package com.renxl.realmall.base;
 
 public interface BaseView<T extends Object> {
     void setData(T t);
+    void fail();
 }

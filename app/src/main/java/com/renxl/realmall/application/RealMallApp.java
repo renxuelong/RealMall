@@ -1,5 +1,6 @@
 package com.renxl.realmall.application;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.widget.TextView;
 
@@ -14,8 +15,10 @@ import com.squareup.leakcanary.LeakCanary;
 
 public class RealMallApp extends Application {
 
+    @SuppressLint("StaticFieldLeak")
     private static RealMallApp instance;
 
+    @SuppressLint("StaticFieldLeak")
     public static TextView view;
     public static boolean isAdd;
 
