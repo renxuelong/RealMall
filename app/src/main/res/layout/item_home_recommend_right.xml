@@ -3,6 +3,9 @@
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginLeft="3dp"
+    android:layout_marginRight="3dp"
     custom:cardCornerRadius="3dp"
     custom:contentPadding="3dp">
 
@@ -18,39 +21,62 @@
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
             android:textColor="@color/black"
-            android:textSize="@dimen/normalTextSize" />
+            android:textSize="@dimen/largeTextSize" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/dividerHeight"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp" />
+            android:layout_marginRight="5dp"
+            android:background="@color/gray_divader" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <LinearLayout
+
+            <RelativeLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/sdv_recommend_up"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_above="@+id/divader"
+                    custom:actualImageScaleType="fitCenter" />
+
+                <View
+                    android:id="@+id/divader"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dividerHeight"
+                    android:layout_centerInParent="true"
+                    android:background="@color/gray_divader" />
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/sdv_recommend_down"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/divader"
+                    custom:actualImageScaleType="fitCenter" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="@dimen/dividerHeight"
+                android:layout_height="match_parent"
+                android:background="@color/gray_divader" />
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/sdv_recommend_big"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                custom:actualImageScaleType="fitCenter" />
 
-                <com.facebook.drawee.view.SimpleDraweeView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-
-                <com.facebook.drawee.view.SimpleDraweeView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1" />
-            </LinearLayout>
 
         </LinearLayout>
-
     </LinearLayout>
-
-
 </android.support.v7.widget.CardView>

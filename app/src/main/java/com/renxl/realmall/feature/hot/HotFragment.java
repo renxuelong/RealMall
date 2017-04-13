@@ -88,7 +88,7 @@ public class HotFragment extends BaseFragment implements HotConstract.IHotView<W
         List<Wears.ListBean> listBean = wears.getList();
         switch (state) {
             case STATE_NORMAL:
-                adapter = new HotAdapter(listBean, getContext(), R.layout.item_hot_list);
+                adapter = new HotAdapter(listBean, getContext());
                 adapter.setOnItemClickListener(this);
                 recycleviewHot.setAdapter(adapter);
                 recycleviewHot.setLayoutManager(new LinearLayoutManager(getActivity()));

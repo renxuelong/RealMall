@@ -19,7 +19,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
 
     private SparseArray<View> views;
 
-    BaseViewHolder(View itemView, final OnItemClickListener onItemClickListener) {
+    public BaseViewHolder(View itemView, final OnItemClickListener onItemClickListener) {
         super(itemView);
         views = new SparseArray<>();
         if (onItemClickListener != null) {

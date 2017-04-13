@@ -22,6 +22,27 @@ class HomePresenter implements HomeContract.IHomePresenter {
 
     @Override
     public void start() {
+        getHomeBanner();
+        getHomeRecommend();
+    }
+
+    private void getHomeRecommend() {
+        RealMallClient.getInstance().get(Constants.HOME_RECOMMEND, new HTTPCallback<List<Recommend>>() {
+            @Override
+            public void ok(List<Recommend> response) {
+                super.ok(response);
+                homeView.setRecommend(response);
+            }
+
+            @Override
+            public void fail(String errorMessage) {
+                super.fail(errorMessage);
+                homeView.showToast("Recommend 请求失败,原因 " + errorMessage);
+            }
+        });
+    }
+
+    private void getHomeBanner() {
         final RequestParams requestParams = new RequestParams();
         requestParams.put("type", 1);
         HTTPCallback<List<Advertising>> callback = new HTTPCallback<List<Advertising>>() {
@@ -33,10 +54,9 @@ class HomePresenter implements HomeContract.IHomePresenter {
             @Override
             public void fail(String errorMessage) {
                 super.fail(errorMessage);
+                homeView.showToast("Banner 请求失败,原因 " + errorMessage);
             }
         };
         RealMallClient.getInstance().post(Constants.HOME_BANNER, requestParams, callback, false);
     }
-
-
 }

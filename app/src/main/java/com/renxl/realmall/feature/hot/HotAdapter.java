@@ -19,14 +19,14 @@ import java.util.List;
 
 class HotAdapter extends BaseAdapter<Wears.ListBean> {
 
-    HotAdapter(List<Wears.ListBean> datas, Context context, int layoutId) {
-        super(datas, context, layoutId);
+    HotAdapter(List<Wears.ListBean> datas, Context context) {
+        super(datas, context, R.layout.item_hot_list);
     }
 
     @SuppressLint({"StringFormatMatches", "StringFormatInvalid"})
     @Override
     public void covert(BaseViewHolder holder, Wears.ListBean item) {
-        if (!TextUtils.isEmpty(item.getImgUrl()))
+        if (!TextUtils.isEmpty(item.getImgUrl() ))
             holder.getSimpleDraweeView(R.id.img_hot_list_icon).setImageURI(item.getImgUrl());
 
         if (!TextUtils.isEmpty(item.getName()))

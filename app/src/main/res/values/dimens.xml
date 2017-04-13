@@ -8,6 +8,8 @@
     <dimen name="inputEditTextMinHeight">32dp</dimen>
     <dimen name="searchViewMinHeight">45dp</dimen>
 
+    <dimen name="dividerHeight">0.5dp</dimen>
+
     <!--TextSize-->
     <dimen name="smallestTextSize">10sp</dimen>
     <dimen name="smallerTextSize">12sp</dimen>

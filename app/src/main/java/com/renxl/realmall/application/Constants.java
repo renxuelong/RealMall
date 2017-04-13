@@ -7,5 +7,6 @@ package com.renxl.realmall.application;
 
 public class Constants {
     public static final String HOME_BANNER = "/course_api/banner/query";
+    public static final String HOME_RECOMMEND = "/course_api/campaign/recommend";
     public static final String HOT_WEARS = "/course_api/wares/hot";
 }

@@ -2,6 +2,8 @@ package com.renxl.realmall.feature.home;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,9 +12,9 @@ import android.view.ViewGroup;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
-import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.renxl.realmall.R;
 import com.renxl.realmall.base.BaseFragment;
+import com.renxl.realmall.base.BaseViewHolder;
 import com.renxl.realmall.utils.Toast;
 import com.renxl.realmall.widget.ToolBar;
 
@@ -34,12 +36,22 @@ public class HomeFragment extends BaseFragment implements HomeContract.IHomeView
     SliderLayout homeSL;
     @BindView(R.id.toolbar_home)
     ToolBar toolbarHome;
-
-    private HomeContract.IHomePresenter homePresenter;
+    @BindView(R.id.recycleview_home)
+    RecyclerView recycleviewHome;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        HomeContract.IHomePresenter homePresenter = new HomePresenter(this);
+        homePresenter.start();
+
         @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.fragment_home, null);
+        initView(view);
+
+        return view;
+    }
+
+    private View initView(View view) {
         unbinder = ButterKnife.bind(this, view);
         toolbarHome.setToolbarListener(new ToolBar.ToolbarListener() {
             @Override
@@ -52,8 +64,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.IHomeView
                 Toast.show("onRightClich");
             }
         });
-        homePresenter = new HomePresenter(this);
-        homePresenter.start();
         return view;
     }
 
@@ -79,21 +89,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.IHomeView
             });
             homeSL.addSlider(textSliderView);
         }
-
-        homeSL.addOnPageChangeListener(new ViewPagerEx.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-            }
-        });
-
     }
 
     @Override
@@ -105,5 +100,28 @@ public class HomeFragment extends BaseFragment implements HomeContract.IHomeView
     public void onStop() {
         homeSL.stopAutoCycle();
         super.onStop();
+    }
+
+    @Override
+    public void setRecommend(List<Recommend> recommends) {
+        if (recommends == null || recommends.size() <= 0) return;
+
+        final HomeAdapter adapter = new HomeAdapter(recommends, this.getContext());
+        adapter.setOnItemClickListener(new BaseViewHolder.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Recommend recommend = adapter.getDatas().get(position);
+                Toast.show("Item - " + position + "--" + recommend.getTitle());
+            }
+        });
+        recycleviewHome.setAdapter(adapter);
+        recycleviewHome.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        recycleviewHome.addItemDecoration(new Decoration());
+    }
+
+    @Override
+    public void showToast(String str) {
+        if (TextUtils.isEmpty(str)) return;
+        Toast.show(str);
     }
 }

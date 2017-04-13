@@ -18,7 +18,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
     private List<T> mDatas;
     protected Context mContext;
     private int layoutId;
-    private BaseViewHolder.OnItemClickListener onItemClickListener;
+    protected BaseViewHolder.OnItemClickListener onItemClickListener;
 
     public BaseAdapter(List<T> datas, Context context, int layoutId) {
         mDatas = datas;
