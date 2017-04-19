@@ -9,7 +9,6 @@ import android.text.TextUtils;
 
 public abstract class BaseClient {
 
-
     public abstract String getHost();
 
     private String getAbsoluteUrl(String url) {
@@ -26,7 +25,7 @@ public abstract class BaseClient {
     }
 
     public void get(String url, RequestParams params, HTTPCallback callback) {
-        RequestManager.sendRequest(RequestManager.GET, getAbsoluteUrl(url), params, callback);
+        get(url, params, callback, true);
     }
 
     public void get(String url, RequestParams params, HTTPCallback callback, boolean cache) {
@@ -35,6 +34,14 @@ public abstract class BaseClient {
 
     public void post(String url, HTTPCallback callback) {
         post(url, "", callback, true);
+    }
+
+    public void post(String url, String json, HTTPCallback callback) {
+        post(url, json, callback, true);
+    }
+
+    public void post(String url, HTTPCallback callback, boolean cache) {
+        post(url, "", callback, cache);
     }
 
     public void post(String url, String json, HTTPCallback callback, boolean cache) {

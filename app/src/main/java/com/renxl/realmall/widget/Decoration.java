@@ -1,4 +1,4 @@
-package com.renxl.realmall.feature.home;
+package com.renxl.realmall.widget;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;

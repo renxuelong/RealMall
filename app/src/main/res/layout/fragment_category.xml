@@ -12,5 +12,42 @@
         android:background="@color/colorPrimaryDark"
         toolbar:title_text="@string/category" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycleview_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.daimajia.slider.library.SliderLayout
+                android:id="@+id/sl_category"
+                android:layout_width="match_parent"
+                android:layout_height="120dp" />
+
+            <com.cjj.MaterialRefreshLayout
+                android:id="@+id/mrl_category_wares"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycleview_category_wares"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp" />
+            </com.cjj.MaterialRefreshLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
 
 </LinearLayout>

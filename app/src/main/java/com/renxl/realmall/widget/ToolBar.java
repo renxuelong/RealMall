@@ -1,5 +1,6 @@
 package com.renxl.realmall.widget;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
@@ -107,7 +108,7 @@ public class ToolBar extends Toolbar {
     }
 
     private void initView() {
-        RelativeLayout view = (RelativeLayout) LayoutInflater.from(getContext()).inflate(R.layout.toolbar_main, null);
+        @SuppressLint("InflateParams") RelativeLayout view = (RelativeLayout) LayoutInflater.from(getContext()).inflate(R.layout.toolbar_main, null);
         titleEt = (EditText) view.findViewById(R.id.et_main_toolbar_search);
         titleTv = (TextView) view.findViewById(R.id.tv_main_toolbar_title);
         rightBtn = (Button) view.findViewById(R.id.btn_main_toolbar_right);

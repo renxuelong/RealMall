@@ -8,6 +8,7 @@ import android.view.View;
 import com.renxl.realmall.R;
 import com.renxl.realmall.base.BaseAdapter;
 import com.renxl.realmall.base.BaseViewHolder;
+import com.renxl.realmall.feature.category.Wares;
 import com.renxl.realmall.utils.Toast;
 
 import java.util.List;
@@ -17,15 +18,15 @@ import java.util.List;
  * On 2017/4/7 10:24.
  */
 
-class HotAdapter extends BaseAdapter<Wears.ListBean> {
+class HotAdapter extends BaseAdapter<Wares> {
 
-    HotAdapter(List<Wears.ListBean> datas, Context context) {
+    HotAdapter(List<Wares> datas, Context context) {
         super(datas, context, R.layout.item_hot_list);
     }
 
     @SuppressLint({"StringFormatMatches", "StringFormatInvalid"})
     @Override
-    public void covert(BaseViewHolder holder, Wears.ListBean item) {
+    public void covert(BaseViewHolder holder, Wares item) {
         if (!TextUtils.isEmpty(item.getImgUrl() ))
             holder.getSimpleDraweeView(R.id.img_hot_list_icon).setImageURI(item.getImgUrl());
 

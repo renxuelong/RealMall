@@ -29,10 +29,10 @@ import okhttp3.Response;
  * 执行网络请求的类
  */
 
-public class RequestManager {
-    public static final int GET = 1;
-    public static final int POST = 2;
-    public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+class RequestManager {
+    static final int GET = 1;
+    static final int POST = 2;
+    private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     private static final String TAG = "RequestManager";
 
     private static OkHttpClient okHttpClient;
@@ -48,6 +48,7 @@ public class RequestManager {
     }
 
     /**
+     * 进行网络请求的调用方法
      * 禁止 APP 中的请求直接访问该方法，必须通过 RealMallClient
      *
      * @param method
@@ -55,20 +56,12 @@ public class RequestManager {
      * @param requestParams
      * @param callback
      */
-    static void sendRequest(int method, final String url, RequestParams requestParams, final BaseCallback callback) {
-        sendRequest(method, url, requestParams, callback, true);
-    }
-
     static void sendRequest(int method, final String url, RequestParams requestParams, final BaseCallback callback, boolean cache) {
-        excute(url, callback, getRequest(method, url, requestParams, callback, cache, getRequestBody(requestParams)));
-    }
-
-    static void sendRequest(int method, final String url, String json, final BaseCallback callback) {
-        sendRequest(method, url, json, callback, true);
+        execute(url, callback, getRequest(method, url, requestParams, callback, cache, getRequestBody(requestParams)));
     }
 
     static void sendRequest(int method, final String url, String json, final BaseCallback callback, boolean cache) {
-        excute(url, callback, getRequest(method, url, null, callback, cache, getRequestBody(json)));
+        execute(url, callback, getRequest(method, url, null, callback, cache, getRequestBody(json)));
     }
 
     /**
@@ -78,15 +71,35 @@ public class RequestManager {
      * @param callback 回调接口
      * @param request  请求 Request
      */
-    private static void excute(final String url, final BaseCallback callback, final Request request) {
+    private static void execute(final String url, final BaseCallback callback, final Request request) {
         okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, final Response response) throws IOException {
+
+                final String result = response.body().string();
+                log("onResponse 请求结果：" + result);
+
+                if (callback == null)
+                    throw new RuntimeException("Callback 为 null");
+
+                if (response.isSuccessful()) {
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            callback.ok(getResponseByResult(result, callback));
+                        }
+                    });
+                    HTTPFileCache.put(url, result);
+                }
+            }
+
             @Override
             public void onFailure(final Call call, final IOException e) {
                 log("onFailure 请求结果：" + e.getMessage());
-                if (callback == null) {
-                    log("回调失败(请求无 Callback):" + e.getMessage());
-                    return;
-                }
+
+                if (callback == null)
+                    throw new RuntimeException("请求无 Callback");
+
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
@@ -98,33 +111,18 @@ public class RequestManager {
                     }
                 });
             }
-
-            @Override
-            public void onResponse(Call call, final Response response) throws IOException {
-                final String result = response.body().string();
-                log("onResponse 请求结果：" + result);
-                if (callback == null) {
-                    log("回调失败(请求无 Callback)" + result);
-                    return;
-                }
-                mHandler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (TextUtils.isEmpty(result)) return;
-                        callback.ok(getResponseByResult(result, callback));
-                    }
-                });
-                HTTPFileCache.put(url, result);
-            }
         });
     }
 
+    /**
+     * 获取返回数据类型的方法
+     */
     private static Object getResponseByResult(String result, BaseCallback callback) {
         return mGson.fromJson(result, callback.mType);
     }
 
     /**
-     * 根据请求参数构造请求 Request
+     * 请求参数为 RequestParams 时构造请求 Request
      * * @param method
      *
      * @param url
@@ -163,7 +161,7 @@ public class RequestManager {
     }
 
     /**
-     * Post 请求时的 RequestBody 构造方法
+     * Post 请求参数为 RequestParams 时的 RequestBody 构造
      *
      * @param requestParams
      * @return

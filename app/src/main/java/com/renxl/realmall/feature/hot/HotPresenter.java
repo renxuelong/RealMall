@@ -1,6 +1,8 @@
 package com.renxl.realmall.feature.hot;
 
 import com.renxl.realmall.application.Constants;
+import com.renxl.realmall.base.BaseBean;
+import com.renxl.realmall.feature.category.Wares;
 import com.renxl.realmall.http.HTTPCallback;
 import com.renxl.realmall.http.RealMallClient;
 import com.renxl.realmall.http.RequestParams;
@@ -30,12 +32,12 @@ class HotPresenter implements HotConstract.IHotPresenter {
         requestParams.put("curPage", currentPage);
         int pageSize = 20;
         requestParams.put("pageSize", pageSize);
-        RealMallClient.getInstance().get(Constants.HOT_WEARS, requestParams, new HTTPCallback<Wears>() {
+        RealMallClient.getInstance().get(Constants.HOT_WEARS, requestParams, new HTTPCallback<BaseBean<Wares>>() {
             @Override
-            public void ok(Wears response) {
-                super.ok(response);
+            public void ok(BaseBean<Wares> response) {
+                if (response == null) mHotView.fail();
                 totalPage = response.getTotalPage();
-                mHotView.setData(response);
+                mHotView.showData(response.getList());
             }
 
             @Override

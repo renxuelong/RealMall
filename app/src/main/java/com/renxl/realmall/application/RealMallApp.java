@@ -26,6 +26,11 @@ public class RealMallApp extends Application {
     public void onCreate() {
         super.onCreate();
         instance = this;
+        initUtils();
+
+    }
+
+    private void initUtils() {
         // Stetho 网络监测工具初始化
         Stetho.initializeWithDefaults(this);
         // 内存泄漏工具

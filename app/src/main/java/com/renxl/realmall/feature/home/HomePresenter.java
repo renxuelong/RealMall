@@ -16,7 +16,7 @@ class HomePresenter implements HomeContract.IHomePresenter {
 
     private HomeContract.IHomeView homeView;
 
-    public HomePresenter(HomeContract.IHomeView homeView) {
+    HomePresenter(HomeContract.IHomeView homeView) {
         this.homeView = homeView;
     }
 
@@ -30,8 +30,7 @@ class HomePresenter implements HomeContract.IHomePresenter {
         RealMallClient.getInstance().get(Constants.HOME_RECOMMEND, new HTTPCallback<List<Recommend>>() {
             @Override
             public void ok(List<Recommend> response) {
-                super.ok(response);
-                homeView.setRecommend(response);
+                homeView.showRecommend(response);
             }
 
             @Override
@@ -48,7 +47,7 @@ class HomePresenter implements HomeContract.IHomePresenter {
         HTTPCallback<List<Advertising>> callback = new HTTPCallback<List<Advertising>>() {
             @Override
             public void ok(List<Advertising> advertisings) {
-                homeView.setData(advertisings);
+                homeView.showData(advertisings);
             }
 
             @Override

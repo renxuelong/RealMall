@@ -15,6 +15,7 @@ import com.cjj.MaterialRefreshListener;
 import com.renxl.realmall.R;
 import com.renxl.realmall.base.BaseFragment;
 import com.renxl.realmall.base.BaseViewHolder;
+import com.renxl.realmall.feature.category.Wares;
 import com.renxl.realmall.utils.Toast;
 import com.renxl.realmall.widget.ToolBar;
 
@@ -29,7 +30,7 @@ import butterknife.Unbinder;
  * On 2017/2/28 17:35.
  */
 
-public class HotFragment extends BaseFragment implements HotConstract.IHotView<Wears>, BaseViewHolder.OnItemClickListener {
+public class HotFragment extends BaseFragment implements HotConstract.IHotView<List<Wares>>, BaseViewHolder.OnItemClickListener {
 
     private static final int STATE_NORMAL = 0;
     private static final int STATE_REFRESH = 1;
@@ -83,12 +84,12 @@ public class HotFragment extends BaseFragment implements HotConstract.IHotView<W
     }
 
     @Override
-    public void setData(Wears wears) {
-        if (wears == null) return;
-        List<Wears.ListBean> listBean = wears.getList();
+    public void showData(List<Wares> wares) {
+        if (wares == null) return;
+
         switch (state) {
             case STATE_NORMAL:
-                adapter = new HotAdapter(listBean, getContext());
+                adapter = new HotAdapter(wares, getContext());
                 adapter.setOnItemClickListener(this);
                 recycleviewHot.setAdapter(adapter);
                 recycleviewHot.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -97,15 +98,14 @@ public class HotFragment extends BaseFragment implements HotConstract.IHotView<W
                 break;
             case STATE_REFRESH:
                 adapter.clear();
-                adapter.setData(listBean);
+                adapter.setData(wares);
                 srlHot.finishRefresh();
                 break;
             case STATE_LOADMORE:
-                adapter.setData(listBean, adapter.getDatas().size());
+                adapter.setData(wares, adapter.getDatas().size());
                 srlHot.finishRefreshLoadMore();
                 break;
         }
-
     }
 
     @Override
@@ -125,7 +125,6 @@ public class HotFragment extends BaseFragment implements HotConstract.IHotView<W
                 break;
         }
     }
-
 
     @Override
     public void onDestroyView() {

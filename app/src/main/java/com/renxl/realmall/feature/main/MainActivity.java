@@ -33,11 +33,6 @@ public class MainActivity extends BaseActivity {
         initTab();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
     public void initTab() {
         List<Tab> mTabs = new ArrayList<>(5);
         mTabs.add(new Tab(R.drawable.selector_icon_home, R.string.home, HomeFragment.class));
@@ -70,5 +65,4 @@ public class MainActivity extends BaseActivity {
         tvTitle.setText(tab.getTitle());
         return view;
     }
-
 }

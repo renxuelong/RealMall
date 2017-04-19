@@ -17,9 +17,8 @@ class HomeContract {
     }
 
     interface IHomeView<T extends Object> extends BaseView<T> {
-        void setRecommend(List<Recommend> recommends);
+        void showRecommend(List<Recommend> recommends);
 
         void showToast(String str);
     }
-
 }

@@ -16,6 +16,7 @@ import com.renxl.realmall.R;
 import com.renxl.realmall.base.BaseFragment;
 import com.renxl.realmall.base.BaseViewHolder;
 import com.renxl.realmall.utils.Toast;
+import com.renxl.realmall.widget.Decoration;
 import com.renxl.realmall.widget.ToolBar;
 
 import java.util.List;
@@ -73,14 +74,13 @@ public class HomeFragment extends BaseFragment implements HomeContract.IHomeView
         unbinder.unbind();
     }
 
-
     @Override
-    public void setData(List<Advertising> advertisings) {
+    public void showData(List<Advertising> advertisings) {
         if (advertisings == null) return;
         for (final Advertising advertising : advertisings) {
             if (TextUtils.isEmpty(advertising.getImgUrl()) || TextUtils.isEmpty(advertising.getName()))
-                return;
-            final TextSliderView textSliderView = new TextSliderView(getActivity());
+                continue;
+            final TextSliderView textSliderView = new TextSliderView(getContext());
             textSliderView.description(advertising.getName()).image(advertising.getImgUrl()).setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
                 @Override
                 public void onSliderClick(BaseSliderView slider) {
@@ -93,7 +93,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.IHomeView
 
     @Override
     public void fail() {
-
     }
 
     @Override
@@ -103,7 +102,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.IHomeView
     }
 
     @Override
-    public void setRecommend(List<Recommend> recommends) {
+    public void showRecommend(List<Recommend> recommends) {
         if (recommends == null || recommends.size() <= 0) return;
 
         final HomeAdapter adapter = new HomeAdapter(recommends, this.getContext());

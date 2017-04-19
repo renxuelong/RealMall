@@ -20,10 +20,10 @@ import java.util.Set;
 
 public class RequestParams {
 
-    public Map<String, Object> params = new HashMap<>();
+    Map<String, Object> params;
 
     public RequestParams() {
-
+        params = new HashMap<>();
     }
 
     public void put(String key, String value) {
@@ -68,7 +68,6 @@ public class RequestParams {
         params.remove(key);
         return this;
     }
-
 
     public String toString() {
         return params.toString();
