@@ -20,27 +20,37 @@ import java.util.List;
 
 class HotAdapter extends BaseAdapter<Wares> {
 
-    HotAdapter(List<Wares> datas, Context context) {
+
+    private AddBtnClickListener addBtnClickListener;
+
+    HotAdapter(List<Wares> datas, Context context, AddBtnClickListener listener) {
         super(datas, context, R.layout.item_hot_list);
+        addBtnClickListener = listener;
     }
 
     @SuppressLint({"StringFormatMatches", "StringFormatInvalid"})
     @Override
-    public void covert(BaseViewHolder holder, Wares item) {
+    public void covert(BaseViewHolder holder, final Wares item) {
         if (!TextUtils.isEmpty(item.getImgUrl() ))
             holder.getSimpleDraweeView(R.id.img_hot_list_icon).setImageURI(item.getImgUrl());
 
         if (!TextUtils.isEmpty(item.getName()))
             holder.getTextView(R.id.tv_hot_list_name).setText(item.getName());
 
-        holder.getTextView(R.id.tv_hot_list_price).setText(String.format(mContext.getResources().getString(R.string.rmb),
-                String.format(mContext.getResources().getString(R.string.pointtwo), item.getPrice())));
+        holder.getTextView(R.id.tv_hot_list_price).setText(String.format(mContext.getString(R.string.rmb),
+                String.format(mContext.getString(R.string.pointtwo), item.getPrice())));
 
+        if (addBtnClickListener == null) return;
         holder.getButton(R.id.btn_hot_list_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.show("Add");
+                Toast.show("操作成功");
+                addBtnClickListener.addClick(item);
             }
         });
+    }
+
+    interface AddBtnClickListener {
+        void addClick(Wares item);
     }
 }

@@ -7,4 +7,14 @@
         <attr name="title_search" format="boolean" />
     </declare-styleable>
 
+    <declare-styleable name="AddSubView">
+        <attr name="value" format="integer|reference" />
+        <attr name="min_value" format="integer|reference" />
+        <attr name="max_value" format="integer|reference" />
+
+        <attr name="value_background" format="reference" />
+        <attr name="btn_add_background" format="reference" />
+        <attr name="btn_sub_background" format="reference" />
+    </declare-styleable>
+
 </resources>

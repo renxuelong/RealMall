@@ -4,11 +4,13 @@ import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.renxl.realmall.widget.AddSubView;
 
 /**
  * Created by renxl
@@ -49,6 +51,14 @@ public class BaseViewHolder extends RecyclerView.ViewHolder {
     }
 
     public SimpleDraweeView getSimpleDraweeView(int id) {
+        return getView(id);
+    }
+
+    public CheckBox getCheckBox(int id) {
+        return getView(id);
+    }
+
+    public AddSubView getAddSubView(int id) {
         return getView(id);
     }
 

@@ -2,10 +2,12 @@ package com.renxl.realmall.feature.main;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.renxl.realmall.R;
@@ -25,6 +27,8 @@ public class MainActivity extends BaseActivity {
 
     private LayoutInflater mLayoutInflater;
     private FragmentTabHost mTabHost;
+
+    private CartFragment mCartFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,23 @@ public class MainActivity extends BaseActivity {
         }
 
         mTabHost.setCurrentTab(0);
+
+        mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+            @Override
+            public void onTabChanged(String tabId) {
+                if (getString(R.string.cart).equals(tabId)) {
+                    if (mCartFragment == null) {
+                        Fragment fragment = getSupportFragmentManager().findFragmentByTag(getString(R.string.cart));
+                        if (fragment != null) {
+                            mCartFragment = (CartFragment) fragment;
+                            mCartFragment.refData();
+                        }
+                    } else {
+                        mCartFragment.refData();
+                    }
+                }
+            }
+        });
     }
 
     private void addTab(Tab tab) {
@@ -58,7 +79,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private View getTabView(Tab tab) {
-        @SuppressLint("InflateParams") View view = mLayoutInflater.inflate(R.layout.tab_indecator, null, false);
+        @SuppressLint("InflateParams") View view = mLayoutInflater.inflate(R.layout.tab_main_indecator, null, false);
         ImageView imgIcon = (ImageView) view.findViewById(R.id.img_tab);
         TextView tvTitle = (TextView) view.findViewById(R.id.tv_tab);
         imgIcon.setImageResource(tab.getIcon());

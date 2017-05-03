@@ -44,6 +44,11 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
         }
     }
 
+    public void setData(T t, int position) {
+        mDatas.set(position, t);
+        notifyItemChanged(position);
+    }
+
     public void setData(List<T> datas) {
         setData(datas, 0);
     }
@@ -60,7 +65,6 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
         if (position >= mDatas.size()) return null;
         return mDatas.get(position);
     }
-
 
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

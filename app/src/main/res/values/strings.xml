@@ -10,4 +10,9 @@
     <string name="buynow">立即购买</string>
     <string name="rmb">¥ %1$s</string>
     <string name="pointtwo">%.2f</string>
+    <string name="sub">-</string>
+    <string name="add">+</string>
+    <string name="select_all">全选</string>
+    <string name="total">合计 ¥</string>
+    <string name="go_pay">去结算</string>
 </resources>

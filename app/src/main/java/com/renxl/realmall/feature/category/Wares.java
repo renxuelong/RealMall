@@ -18,13 +18,13 @@ public class Wares {
      * sale : 402
      */
 
-    private long id;
-    private int categoryId;
-    private int campaignId;
-    private String name;
-    private String imgUrl;
-    private double price;
-    private double sale;
+    protected long id;
+    protected int categoryId;
+    protected int campaignId;
+    protected String name;
+    protected String imgUrl;
+    protected double price;
+    protected double sale;
 
     public long getId() {
         return id;
@@ -80,5 +80,18 @@ public class Wares {
 
     public void setSale(double sale) {
         this.sale = sale;
+    }
+
+    @Override
+    public String toString() {
+        return "Wares{" +
+                "id=" + id +
+                ", categoryId=" + categoryId +
+                ", campaignId=" + campaignId +
+                ", name='" + name + '\'' +
+                ", imgUrl='" + imgUrl + '\'' +
+                ", price=" + price +
+                ", sale=" + sale +
+                '}';
     }
 }

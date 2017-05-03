@@ -46,12 +46,12 @@ public class HotFragment extends BaseFragment implements HotConstract.IHotView<L
 
     private int state = STATE_NORMAL;
     private HotAdapter adapter;
-    private HotConstract.IHotPresenter mHotPresenter;
+    private HotConstract.IHotPresenter<Wares> mHotPresenter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.fragment_hot, null, false);
-        mHotPresenter = new HotPresenter(this);
+        mHotPresenter = new HotPresenter(this, getContext());
         mHotPresenter.start();
         unbinder = ButterKnife.bind(this, view);
         initSwipeRefresh();
@@ -89,7 +89,12 @@ public class HotFragment extends BaseFragment implements HotConstract.IHotView<L
 
         switch (state) {
             case STATE_NORMAL:
-                adapter = new HotAdapter(wares, getContext());
+                adapter = new HotAdapter(wares, getContext(), new HotAdapter.AddBtnClickListener() {
+                    @Override
+                    public void addClick(Wares item) {
+                        mHotPresenter.addCart(item);
+                    }
+                });
                 adapter.setOnItemClickListener(this);
                 recycleviewHot.setAdapter(adapter);
                 recycleviewHot.setLayoutManager(new LinearLayoutManager(getActivity()));

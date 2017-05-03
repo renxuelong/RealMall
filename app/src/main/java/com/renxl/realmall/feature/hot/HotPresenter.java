@@ -1,25 +1,32 @@
 package com.renxl.realmall.feature.hot;
 
+import android.content.Context;
+
 import com.renxl.realmall.application.Constants;
 import com.renxl.realmall.base.BaseBean;
+import com.renxl.realmall.feature.cart.CartBean;
+import com.renxl.realmall.feature.cart.CartProvider;
 import com.renxl.realmall.feature.category.Wares;
 import com.renxl.realmall.http.HTTPCallback;
 import com.renxl.realmall.http.RealMallClient;
 import com.renxl.realmall.http.RequestParams;
+import com.renxl.realmall.utils.Log;
 
 /**
  * Created by renxl
  * On 2017/4/5 16:12.
  */
 
-class HotPresenter implements HotConstract.IHotPresenter {
+class HotPresenter implements HotConstract.IHotPresenter<Wares> {
 
     private HotConstract.IHotView mHotView;
     private int currentPage = 1;
     private int totalPage;
+    private CartProvider mCartProvider;
 
-    HotPresenter(HotConstract.IHotView hotView) {
+    HotPresenter(HotConstract.IHotView hotView, Context context) {
         mHotView = hotView;
+        mCartProvider = new CartProvider(context);
     }
 
     @Override
@@ -62,5 +69,11 @@ class HotPresenter implements HotConstract.IHotPresenter {
         }
         currentPage += 1;
         getData();
+    }
+
+    @Override
+    public void addCart(Wares wares) {
+        CartBean cartBean = new CartBean(wares);
+        mCartProvider.putCartBean(cartBean);
     }
 }
