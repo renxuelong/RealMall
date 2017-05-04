@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:gravity="center_vertical"
+    android:layout_height="match_parent"
+    android:gravity="center"
     android:padding="3dp">
 
-    <Button
+    <TextView
         android:id="@+id/btn_sub"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
         android:text="@string/sub"
+        android:gravity="center"
         android:textColor="@color/black"
         android:textSize="@dimen/largeTextSize" />
 
@@ -18,14 +19,15 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:minWidth="80dp"
+        android:minWidth="60dp"
         android:textColor="@color/black" />
 
-    <Button
+    <TextView
         android:id="@+id/btn_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
         android:text="@string/add"
+        android:gravity="center"
         android:textColor="@color/black"
         android:textSize="@dimen/largeTextSize" />
 

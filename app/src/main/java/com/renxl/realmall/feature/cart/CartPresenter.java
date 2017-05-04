@@ -27,19 +27,15 @@ public class CartPresenter implements CartContract.ICartPresenter<CartBean> {
     }
 
     @Override
-    public void updateData(int position) {
-        CartBean cartBean = mCartProvider.getCartBeanList().get(position);
-        cartBean.setChecked(!cartBean.isChecked());
-
-        mCartProvider.putCartBean(cartBean);
-
-        mView.refData(mCartProvider.getCartBeanList(), position);
+    public void delete(CartBean cartBean) {
+        mCartProvider.delete(cartBean);
     }
 
     @Override
     public void updateData(CartBean cartBean) {
         mCartProvider.putCartBean(cartBean);
     }
+
 
     @Override
     public void refData() {

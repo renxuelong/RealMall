@@ -18,11 +18,11 @@ import java.util.List;
 
 public class CartProvider {
     private static final String CART_KEY = "cart";
-    private static SparseArray<CartBean> cartBeanSparseArray;
+    private static SparseArray<CartBean> mData;
     private Context mContext;
 
     public CartProvider(Context context) {
-        cartBeanSparseArray = new SparseArray<>();
+        mData = new SparseArray<>();
         mContext = context;
         initSparseArray();
     }
@@ -30,20 +30,15 @@ public class CartProvider {
     private void initSparseArray() {
         List<CartBean> list = getListFromLocal();
         if (list == null || list.size() <= 0) return;
-
         for (CartBean cartBean : list) {
-            cartBeanSparseArray.put((int) (cartBean.getId()), cartBean);
+            mData.put((int) (cartBean.getId()), cartBean);
         }
-    }
-
-    List<CartBean> getCartBeanList() {
-        return getListFromSparseArray();
     }
 
     public void putCartBean(CartBean cartBean) {
         if (cartBean == null) return;
 
-        CartBean temp = cartBeanSparseArray.get((int) (cartBean.getId()));
+        CartBean temp = mData.get((int) (cartBean.getId()));
         if (temp == null) {
             cartBean.setmCount(1);
         } else {
@@ -52,18 +47,31 @@ public class CartProvider {
                 cartBean.setChecked(temp.isChecked());
             }
         }
-        cartBeanSparseArray.put((int) (cartBean.getId()), cartBean);
+        mData.put((int) (cartBean.getId()), cartBean);
+        commit();
+    }
+
+    public void delete(CartBean cartBean) {
+        mData.delete((int) (cartBean.getId()));
         commit();
     }
 
     private void commit() {
-        String json = getJsonFromList();
+        String json = getJsonFromData();
         SharedPreferencesUtils.putString(mContext, CART_KEY, json);
     }
 
-    private String getJsonFromList() {
-        List<CartBean> lists = getListFromSparseArray();
+    private String getJsonFromData() {
+        List<CartBean> lists = getCartBeanList();
         return JsonUtils.toString(lists);
+    }
+
+    public List<CartBean> getCartBeanList() {
+        List<CartBean> lists = new ArrayList<>();
+        for (int i = 0; i < mData.size(); i++) {
+            lists.add(mData.valueAt(i));
+        }
+        return lists;
     }
 
     private List<CartBean> getListFromLocal() {
@@ -71,14 +79,5 @@ public class CartProvider {
         if (TextUtils.isEmpty(json)) return null;
         return JsonUtils.fromJson(json, new TypeToken<List<CartBean>>() {
         }.getType());
-    }
-
-    private List<CartBean> getListFromSparseArray() {
-        List<CartBean> lists = new ArrayList<>();
-
-        for (int i = 0; i < cartBeanSparseArray.size(); i++) {
-            lists.add(cartBeanSparseArray.valueAt(i));
-        }
-        return lists;
     }
 }

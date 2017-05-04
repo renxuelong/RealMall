@@ -6,7 +6,6 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -28,8 +27,7 @@ public class AddSubView extends LinearLayout implements View.OnClickListener {
     private int maxValue;
     private Drawable btnAddBg, btnSubBg, tvValueBg;
 
-    private TextView tvValue;
-    private Button btnAdd, btnSub;
+    private TextView tvValue, btnAdd, btnSub;
 
     private OnAddSubClickListener onAddSubClickListener;
 
@@ -102,8 +100,8 @@ public class AddSubView extends LinearLayout implements View.OnClickListener {
     private void initView() {
         LinearLayout view = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.add_sub_widget, this, true);
         tvValue = (TextView) view.findViewById(R.id.tv_value);
-        btnAdd = (Button) view.findViewById(R.id.btn_add);
-        btnSub = (Button) view.findViewById(R.id.btn_sub);
+        btnAdd = (TextView) view.findViewById(R.id.btn_add);
+        btnSub = (TextView) view.findViewById(R.id.btn_sub);
         btnAdd.setOnClickListener(this);
         btnSub.setOnClickListener(this);
     }

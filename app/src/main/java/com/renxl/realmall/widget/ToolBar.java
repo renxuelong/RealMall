@@ -76,14 +76,14 @@ public class ToolBar extends Toolbar {
         this.toolbarListener = toolbarListener;
     }
 
-    private void setRightBtnText(String title) {
+    public void setRightBtnText(String title) {
         rightBtn.setText(title);
         rightBtn.setVisibility(VISIBLE);
         rightBtn.setBackgroundColor(Color.TRANSPARENT);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    private void setRightBtnImg(Drawable drawable) {
+    public void setRightBtnImg(Drawable drawable) {
         rightBtn.setText("");
         rightBtn.setBackground(drawable);
         rightBtn.setVisibility(VISIBLE);
@@ -126,7 +126,7 @@ public class ToolBar extends Toolbar {
             @Override
             public void onClick(View v) {
                 if (toolbarListener != null) {
-                    toolbarListener.onRightClich();
+                    toolbarListener.onRightClick();
                 }
             }
         });
@@ -138,7 +138,7 @@ public class ToolBar extends Toolbar {
     public interface ToolbarListener {
         void onSearchClick();
 
-        void onRightClich();
+        void onRightClick();
     }
 
 }

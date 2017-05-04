@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.renxl.realmall.R;
 import com.renxl.realmall.base.BaseFragment;
-import com.renxl.realmall.base.BaseViewHolder;
 import com.renxl.realmall.widget.ToolBar;
 
 import java.util.ArrayList;
@@ -30,6 +29,10 @@ import butterknife.Unbinder;
  */
 
 public class CartFragment extends BaseFragment implements CartContract.ICartView<List<CartBean>> {
+
+    private final int STATE_COMPLETE = 0;
+    private final int STATE_EDIT = 1;
+
     @BindView(R.id.cart_toolbar)
     ToolBar cartToolbar;
     @BindView(R.id.recyclerview_cart_list)
@@ -40,6 +43,8 @@ public class CartFragment extends BaseFragment implements CartContract.ICartView
     TextView tvCartTotalPrice;
     @BindView(R.id.btn_cart_pay)
     Button btnCartPay;
+    @BindView(R.id.btn_cart_del)
+    Button btnCartDel;
     Unbinder unbinder;
 
     private CartContract.ICartPresenter<CartBean> mCartPresenter;
@@ -49,18 +54,63 @@ public class CartFragment extends BaseFragment implements CartContract.ICartView
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cart, null);
         unbinder = ButterKnife.bind(this, view);
+        initView(view);
+        return view;
+    }
 
+    private void initView(View view) {
         mCartPresenter = new CartPresenter(this, getContext());
         mCartPresenter.start();
+        cartToolbar.setTag(STATE_COMPLETE);
 
-        return view;
+        cartToolbar.setToolbarListener(new ToolBar.ToolbarListener() {
+            @Override
+            public void onSearchClick() {
+
+            }
+
+            @Override
+            public void onRightClick() {
+                int state = (int) cartToolbar.getTag();
+                switch (state) {
+                    case STATE_COMPLETE:
+                        showDelControl();
+                        break;
+                    case STATE_EDIT:
+                        hideDelControl();
+                        break;
+                }
+            }
+        });
+    }
+
+    private void showDelControl() {
+        cartToolbar.setRightBtnText(getString(R.string.complete));
+        btnCartDel.setVisibility(View.VISIBLE);
+        btnCartPay.setVisibility(View.GONE);
+        tvCartTotalPrice.setVisibility(View.GONE);
+
+        mAdapter.refCheckAllItem(false);
+        checkboxCartSelectAlll.setChecked(false);
+        cartToolbar.setTag(STATE_EDIT);
+    }
+
+    private void hideDelControl() {
+        cartToolbar.setRightBtnText(getString(R.string.delete));
+        btnCartDel.setVisibility(View.GONE);
+        btnCartPay.setVisibility(View.VISIBLE);
+        tvCartTotalPrice.setVisibility(View.VISIBLE);
+
+        mAdapter.refCheckAllItem(true);
+        checkboxCartSelectAlll.setChecked(true);
+        cartToolbar.setTag(STATE_COMPLETE);
     }
 
     @Override
     public void showData(List<CartBean> cartBeenList) {
         if (cartBeenList == null || cartBeenList.size() <= 0)
             cartBeenList = new ArrayList<>();
-        mAdapter = new CartAdapter(cartBeenList, getContext(), new CartAdapter.OnAddSubClickListener() {
+        mAdapter = new CartAdapter(cartBeenList, getContext(), tvCartTotalPrice, checkboxCartSelectAlll, new CartAdapter.Listener() {
             @Override
             public void addClick(CartBean item) {
                 mCartPresenter.updateData(item);
@@ -71,32 +121,30 @@ public class CartFragment extends BaseFragment implements CartContract.ICartView
                 mCartPresenter.updateData(item);
             }
 
-        });
-        mAdapter.setOnItemClickListener(new BaseViewHolder.OnItemClickListener() {
             @Override
-            public void onItemClick(int position) {
-                mCartPresenter.updateData(position);
+            public void itemClick(CartBean item) {
+                mCartPresenter.updateData(item);
             }
+
+            @Override
+            public void delete(CartBean item) {
+                mCartPresenter.delete(item);
+            }
+
         });
         recyclerviewCartList.setAdapter(mAdapter);
+        checkboxCartSelectAlll.setChecked(mAdapter.isCheckAll());
+        mAdapter.showTotalPrice();
         recyclerviewCartList.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerviewCartList.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
-    }
-
-    public void refData() {
-        mCartPresenter.refData();
     }
 
     @Override
     public void refData(List<CartBean> cartBeen) {
         mAdapter.clear();
         mAdapter.setData(cartBeen);
-    }
-
-    @Override
-    public void refData(List<CartBean> cartBeanList, int position) {
-        CartBean cartBean = cartBeanList.get(position);
-        mAdapter.setData(cartBean, position);
+        checkboxCartSelectAlll.setChecked(mAdapter.isCheckAll());
+        mAdapter.showTotalPrice();
     }
 
     @Override
@@ -104,12 +152,13 @@ public class CartFragment extends BaseFragment implements CartContract.ICartView
 
     }
 
-    @OnClick({R.id.checkbox_cart_select_alll, R.id.btn_cart_pay})
+    @OnClick({R.id.btn_cart_pay, R.id.btn_cart_del})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.checkbox_cart_select_alll:
-                break;
             case R.id.btn_cart_pay:
+                break;
+            case R.id.btn_cart_del:
+                mAdapter.delete();
                 break;
         }
     }
@@ -118,5 +167,9 @@ public class CartFragment extends BaseFragment implements CartContract.ICartView
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    public void refData() {
+        mCartPresenter.refData();
     }
 }

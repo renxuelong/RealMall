@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="5dp">
@@ -26,6 +27,7 @@
         <TextView
             android:id="@+id/tv_cart_title"
             android:layout_width="match_parent"
+            android:maxLines="3"
             android:layout_height="wrap_content" />
 
         <TextView
@@ -38,7 +40,10 @@
         <com.renxl.realmall.widget.AddSubView
             android:id="@+id/add_sub_cart_item"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="50dp"
+            app:btn_add_background="@drawable/selector_btn_add_sub"
+            app:btn_sub_background="@drawable/selector_btn_add_sub"
+            app:value_background="@drawable/bg_tv_add_sub_value" />
 
     </LinearLayout>
 

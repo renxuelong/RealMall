@@ -12,12 +12,10 @@ interface CartContract {
 
     interface ICartView<T> extends BaseView<T> {
         void refData(T t);
-
-        void refData(T t, int position);
     }
 
     interface ICartPresenter<T> extends BasePresenter {
-        void updateData(int position);
+        void delete(T t);
 
         void updateData(T t);
 

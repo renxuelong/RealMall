@@ -61,7 +61,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.IHomeView
             }
 
             @Override
-            public void onRightClich() {
+            public void onRightClick() {
                 Toast.show("onRightClich");
             }
         });

@@ -1,6 +1,6 @@
 package com.renxl.realmall.feature.home;
 
-public class Advertising {
+public class  Advertising {
 
     /**
      * id : 1
