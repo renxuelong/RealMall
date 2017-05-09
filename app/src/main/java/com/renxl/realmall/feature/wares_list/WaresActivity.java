@@ -1,5 +1,6 @@
 package com.renxl.realmall.feature.wares_list;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -16,10 +17,12 @@ import com.renxl.realmall.application.Constants;
 import com.renxl.realmall.base.AddCartAdapter;
 import com.renxl.realmall.base.BaseActivity;
 import com.renxl.realmall.base.BaseBean;
+import com.renxl.realmall.base.BaseViewHolder;
 import com.renxl.realmall.feature.cart.CartBean;
 import com.renxl.realmall.feature.cart.CartProvider;
 import com.renxl.realmall.feature.category.Wares;
 import com.renxl.realmall.feature.hot.HotAdapter;
+import com.renxl.realmall.feature.wares_detail.WareDetailActivity;
 import com.renxl.realmall.utils.Pager;
 import com.renxl.realmall.widget.ToolBar;
 
@@ -66,7 +69,7 @@ public class WaresActivity extends BaseActivity implements Pager.OnPageListener<
         setContentView(R.layout.activity_wares);
         ButterKnife.bind(this);
 
-        cartProvider = new CartProvider(this);
+        cartProvider = CartProvider.getInstance();
         campaignId = getIntent().getIntExtra(CAMPAIGN_ID, 1);
 
         initToolBar();
@@ -185,7 +188,15 @@ public class WaresActivity extends BaseActivity implements Pager.OnPageListener<
         adapter = new HotAdapter(list, this, new AddCartAdapter.AddBtnClickListener<Wares>() {
             @Override
             public void addClick(Wares item) {
-                cartProvider.putCartBean(new CartBean(item));
+                cartProvider.putCartBean(item);
+            }
+        });
+        adapter.setOnItemClickListener(new BaseViewHolder.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Intent intent = new Intent(WaresActivity.this, WareDetailActivity.class);
+                intent.putExtra(WareDetailActivity.EXTRA_WARES, adapter.getDatas().get(position));
+                startActivity(intent);
             }
         });
 

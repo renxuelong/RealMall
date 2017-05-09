@@ -17,7 +17,7 @@ public class CartPresenter implements CartContract.ICartPresenter<CartBean> {
     public CartPresenter(CartContract.ICartView cartView, Context context) {
         mView = cartView;
         mContext = context;
-        mCartProvider = new CartProvider(mContext);
+        mCartProvider = CartProvider.getInstance();
     }
 
     @Override

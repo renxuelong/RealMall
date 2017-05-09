@@ -4,13 +4,11 @@ import android.content.Context;
 
 import com.renxl.realmall.application.Constants;
 import com.renxl.realmall.base.BaseBean;
-import com.renxl.realmall.feature.cart.CartBean;
 import com.renxl.realmall.feature.cart.CartProvider;
 import com.renxl.realmall.feature.category.Wares;
 import com.renxl.realmall.http.HTTPCallback;
 import com.renxl.realmall.http.RealMallClient;
 import com.renxl.realmall.http.RequestParams;
-import com.renxl.realmall.utils.Log;
 
 /**
  * Created by renxl
@@ -26,7 +24,7 @@ class HotPresenter implements HotConstract.IHotPresenter<Wares> {
 
     HotPresenter(HotConstract.IHotView hotView, Context context) {
         mHotView = hotView;
-        mCartProvider = new CartProvider(context);
+        mCartProvider = CartProvider.getInstance();
     }
 
     @Override
@@ -73,7 +71,6 @@ class HotPresenter implements HotConstract.IHotPresenter<Wares> {
 
     @Override
     public void addCart(Wares wares) {
-        CartBean cartBean = new CartBean(wares);
-        mCartProvider.putCartBean(cartBean);
+        mCartProvider.putCartBean(wares);
     }
 }

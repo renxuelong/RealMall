@@ -1,11 +1,14 @@
 package com.renxl.realmall.feature.category;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by renxl
  * On 2017/4/18 14:22.
  */
 
-public class Wares {
+public class Wares implements Parcelable {
 
 
     /**
@@ -19,13 +22,25 @@ public class Wares {
      */
 
     protected long id;
-    protected int categoryId;
-    protected int campaignId;
+    private int categoryId;
+    private int campaignId;
     protected String name;
     protected String imgUrl;
     protected double price;
-    protected double sale;
+    private double sale;
 
+    public Wares() {
+    }
+
+    protected Wares(Parcel in) {
+        id = in.readLong();
+        categoryId = in.readInt();
+        campaignId = in.readInt();
+        name = in.readString();
+        imgUrl = in.readString();
+        price = in.readDouble();
+        sale = in.readDouble();
+    }
     public long getId() {
         return id;
     }
@@ -94,4 +109,32 @@ public class Wares {
                 ", sale=" + sale +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeInt(categoryId);
+        dest.writeInt(campaignId);
+        dest.writeString(name);
+        dest.writeString(imgUrl);
+        dest.writeDouble(price);
+        dest.writeDouble(sale);
+    }
+
+    public static final Creator<Wares> CREATOR = new Creator<Wares>() {
+        @Override
+        public Wares createFromParcel(Parcel in) {
+            return new Wares(in);
+        }
+
+        @Override
+        public Wares[] newArray(int size) {
+            return new Wares[size];
+        }
+    };
 }

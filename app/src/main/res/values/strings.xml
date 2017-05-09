@@ -17,4 +17,6 @@
     <string name="go_pay">去结算</string>
     <string name="complete">完成</string>
     <string name="delete">删除</string>
+    <string name="favorite">收藏</string>
+    <string name="wares_detail">商品详情</string>
 </resources>

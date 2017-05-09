@@ -5,6 +5,8 @@ import android.text.TextUtils;
 import android.util.SparseArray;
 
 import com.google.gson.reflect.TypeToken;
+import com.renxl.realmall.application.RealMallApp;
+import com.renxl.realmall.feature.category.Wares;
 import com.renxl.realmall.utils.JsonUtils;
 import com.renxl.realmall.utils.SharedPreferencesUtils;
 
@@ -18,13 +20,22 @@ import java.util.List;
 
 public class CartProvider {
     private static final String CART_KEY = "cart";
-    private static SparseArray<CartBean> mData;
+    private SparseArray<CartBean> mData;
     private Context mContext;
+    private static CartProvider provider;
 
-    public CartProvider(Context context) {
+
+    private CartProvider(Context context) {
         mData = new SparseArray<>();
         mContext = context;
         initSparseArray();
+    }
+
+    public static CartProvider getInstance() {
+        if (provider == null) {
+            provider = new CartProvider(RealMallApp.getContext());
+        }
+        return provider;
     }
 
     private void initSparseArray() {
@@ -49,6 +60,18 @@ public class CartProvider {
         }
         mData.put((int) (cartBean.getId()), cartBean);
         commit();
+    }
+
+    public void putCartBean(Wares wares) {
+        if (wares == null) return;
+
+        CartBean cartBean = new CartBean();
+        cartBean.setId(wares.getId());
+        cartBean.setName(wares.getName());
+        cartBean.setPrice(wares.getPrice());
+        cartBean.setImgUrl(wares.getImgUrl());
+
+        putCartBean(cartBean);
     }
 
     public void delete(CartBean cartBean) {

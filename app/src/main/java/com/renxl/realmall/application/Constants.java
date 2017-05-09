@@ -12,4 +12,5 @@ public class Constants {
     public static final String CATEGORY = "/course_api/category/list";
     public static final String CATEGORY_WARES = "/course_api/wares/list";
     public static final String WARES_LIST = "/course_api/wares/campaign/list";
+    public static final String WARES_DETAIL = "/course_api/wares/detail.html";
 }
