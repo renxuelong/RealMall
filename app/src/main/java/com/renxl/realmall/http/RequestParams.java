@@ -42,6 +42,10 @@ public class RequestParams {
         addParams(key, value);
     }
 
+    public void put(String key, Object value) {
+        addParams(key, value);
+    }
+
     public void put(String key, String[] value) {
         if (key == null || value == null) return;
 

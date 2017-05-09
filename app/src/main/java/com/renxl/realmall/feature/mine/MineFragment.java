@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 
 import com.renxl.realmall.R;
 import com.renxl.realmall.base.BaseFragment;
-import com.renxl.realmall.utils.Log;
 
 /**
  * Created by renxl
@@ -15,12 +14,13 @@ import com.renxl.realmall.utils.Log;
  */
 
 public class MineFragment extends BaseFragment {
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_mine, null);
-        Log.i("onCreate");
         return view;
     }
+
 
 }

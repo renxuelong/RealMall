@@ -6,6 +6,7 @@ import com.renxl.realmall.feature.home.Advertising;
 import com.renxl.realmall.http.HTTPCallback;
 import com.renxl.realmall.http.RealMallClient;
 import com.renxl.realmall.http.RequestParams;
+import com.renxl.realmall.utils.Log;
 
 import java.util.List;
 
@@ -118,6 +119,7 @@ class CategoryPresenter implements CategoryContract.ICategoryPresenter {
             public void ok(BaseBean<Wares> response) {
                 totalPage = response.getTotalPage();
                 mCategoryView.showWares(response.getList());
+
             }
 
             @Override

@@ -22,7 +22,10 @@ public class Toast {
 
     public static void show(String log) {
         if (TextUtils.isEmpty(log)) return;
-        toast = android.widget.Toast.makeText(mContext, log, android.widget.Toast.LENGTH_SHORT);
+        if (toast == null)
+            toast = android.widget.Toast.makeText(mContext, log, android.widget.Toast.LENGTH_SHORT);
+        else
+            toast.setText(log);
         toast.show();
     }
 

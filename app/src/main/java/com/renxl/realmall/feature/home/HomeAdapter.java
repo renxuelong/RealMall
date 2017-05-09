@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import com.renxl.realmall.R;
 import com.renxl.realmall.base.BaseAdapter;
 import com.renxl.realmall.base.BaseViewHolder;
-import com.renxl.realmall.utils.Toast;
 
 import java.util.List;
 
@@ -22,9 +21,14 @@ class HomeAdapter extends BaseAdapter<Recommend> {
 
     private static final int ITEM_R = 0;
     private static final int ITEM_L = 1;
+    private ImageClickListener mListener;
 
     HomeAdapter(List<Recommend> datas, Context context) {
         super(datas, context, R.layout.item_home_recommend_left);
+    }
+
+    public void setImageClickListener(ImageClickListener listener) {
+        mListener = listener;
     }
 
     @Override
@@ -39,22 +43,18 @@ class HomeAdapter extends BaseAdapter<Recommend> {
     }
 
     @Override
-    public void covert(BaseViewHolder holder, final Recommend item) {
+    public void covert(final BaseViewHolder holder, final Recommend item) {
         if (!TextUtils.isEmpty(item.getTitle())) {
             holder.getTextView(R.id.tv_home_recommend_title).setText(item.getTitle());
-            holder.getTextView(R.id.tv_home_recommend_title).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.show(item.getTitle());
-                }
-            });
         }
         if (!TextUtils.isEmpty(item.getCpOne().getImgUrl())) {
             holder.getSimpleDraweeView(R.id.sdv_recommend_big).setImageURI(item.getCpOne().getImgUrl());
             holder.getSimpleDraweeView(R.id.sdv_recommend_big).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.show(item.getCpOne().getTitle());
+                    if (mListener != null) {
+                        mListener.onImageClick(holder.getSimpleDraweeView(R.id.sdv_recommend_big), item.getCpOne().getId());
+                    }
                 }
             });
         }
@@ -63,7 +63,9 @@ class HomeAdapter extends BaseAdapter<Recommend> {
             holder.getSimpleDraweeView(R.id.sdv_recommend_up).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.show(item.getCpTwo().getTitle());
+                    if (mListener != null) {
+                        mListener.onImageClick(holder.getSimpleDraweeView(R.id.sdv_recommend_up), item.getCpTwo().getId());
+                    }
                 }
             });
         }
@@ -72,7 +74,9 @@ class HomeAdapter extends BaseAdapter<Recommend> {
             holder.getSimpleDraweeView(R.id.sdv_recommend_down).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.show(item.getCpThree().getTitle());
+                    if (mListener != null) {
+                        mListener.onImageClick(holder.getSimpleDraweeView(R.id.sdv_recommend_down), item.getCpThree().getId());
+                    }
                 }
             });
         }
@@ -84,5 +88,9 @@ class HomeAdapter extends BaseAdapter<Recommend> {
             return ITEM_L;
         }
         return ITEM_R;
+    }
+
+    interface ImageClickListener {
+        void onImageClick(View view, int campaignId);
     }
 }

@@ -89,7 +89,7 @@ public class HotFragment extends BaseFragment implements HotConstract.IHotView<L
 
         switch (state) {
             case STATE_NORMAL:
-                adapter = new HotAdapter(wares, getContext(), new HotAdapter.AddBtnClickListener() {
+                adapter = new HotAdapter(wares, getContext(), new HotAdapter.AddBtnClickListener<Wares>() {
                     @Override
                     public void addClick(Wares item) {
                         mHotPresenter.addCart(item);

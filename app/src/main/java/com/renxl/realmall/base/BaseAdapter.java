@@ -37,14 +37,11 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
     public void clear() {
         if (mDatas == null || mDatas.size() <= 0) return;
         mDatas.clear();
-        for (T t : mDatas) {
-            int position = mDatas.indexOf(t);
-            mDatas.remove(position);
-            notifyItemRemoved(position);
-        }
+        notifyDataSetChanged();
     }
 
     public void setData(T t, int position) {
+        if (t == null) return;
         mDatas.set(position, t);
         notifyItemChanged(position);
     }
@@ -57,6 +54,11 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
         if (datas == null || datas.size() <= 0) return;
         mDatas.addAll(datas);
         notifyItemRangeChanged(position, datas.size());
+
+    }
+
+    public void resetLayout(int layoutId) {
+        this.layoutId = layoutId;
     }
 
     public abstract void covert(BaseViewHolder holder, T item);

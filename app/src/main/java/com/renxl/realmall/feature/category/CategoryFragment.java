@@ -143,6 +143,10 @@ public class CategoryFragment extends BaseFragment implements CategoryContract.I
                 break;
             case REFRESH_STATE:
                 mWaresAdapter.clear();
+                if (wares == null || wares.size() <= 0) {
+                    Toast.show("服务器异常");
+                    return;
+                }
                 mWaresAdapter.setData(wares);
                 mrlCategoryWares.finishRefresh();
                 break;

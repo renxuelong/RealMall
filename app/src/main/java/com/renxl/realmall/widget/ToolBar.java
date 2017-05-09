@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -34,17 +32,14 @@ public class ToolBar extends Toolbar {
     private Button rightBtn;
     private ToolbarListener toolbarListener;
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public ToolBar(Context context) {
         this(context, null);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public ToolBar(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     public ToolBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initView();
@@ -82,10 +77,9 @@ public class ToolBar extends Toolbar {
         rightBtn.setBackgroundColor(Color.TRANSPARENT);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    public void setRightBtnImg(Drawable drawable) {
+    public void setRightBtnImg(Drawable resource) {
         rightBtn.setText("");
-        rightBtn.setBackground(drawable);
+        rightBtn.setBackgroundDrawable(resource);
         rightBtn.setVisibility(VISIBLE);
     }
 

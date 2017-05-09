@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.renxl.realmall.feature.wares_list.WaresActivity">
+
+    <com.renxl.realmall.widget.ToolBar
+        android:id="@+id/toolbar_wares_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:minHeight="?attr/actionBarSize"
+        app:right_img="@drawable/icon_grid_32"
+        app:title_text="商品列表" />
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout_wares"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tv_list_size"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:background="@color/darkorange" />
+
+    <com.cjj.MaterialRefreshLayout
+        android:id="@+id/refresh_wares"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerview_wares"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.cjj.MaterialRefreshLayout>
+
+</LinearLayout>

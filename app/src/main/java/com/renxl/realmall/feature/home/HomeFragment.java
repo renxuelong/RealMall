@@ -1,6 +1,9 @@
 package com.renxl.realmall.feature.home;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +17,7 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.renxl.realmall.R;
 import com.renxl.realmall.base.BaseFragment;
-import com.renxl.realmall.base.BaseViewHolder;
+import com.renxl.realmall.feature.wares_list.WaresActivity;
 import com.renxl.realmall.utils.Toast;
 import com.renxl.realmall.widget.Decoration;
 import com.renxl.realmall.widget.ToolBar;
@@ -62,7 +65,7 @@ public class HomeFragment extends BaseFragment implements HomeContract.IHomeView
 
             @Override
             public void onRightClick() {
-                Toast.show("onRightClich");
+                Toast.show("onRightClick");
             }
         });
         return view;
@@ -106,16 +109,45 @@ public class HomeFragment extends BaseFragment implements HomeContract.IHomeView
         if (recommends == null || recommends.size() <= 0) return;
 
         final HomeAdapter adapter = new HomeAdapter(recommends, this.getContext());
-        adapter.setOnItemClickListener(new BaseViewHolder.OnItemClickListener() {
+        adapter.setImageClickListener(new HomeAdapter.ImageClickListener() {
             @Override
-            public void onItemClick(int position) {
-                Recommend recommend = adapter.getDatas().get(position);
-                Toast.show("Item - " + position + "--" + recommend.getTitle());
+            public void onImageClick(View view, int campaignId) {
+                startAnimation(view, campaignId);
             }
         });
+
         recycleviewHome.setAdapter(adapter);
         recycleviewHome.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recycleviewHome.addItemDecoration(new Decoration());
+    }
+
+    private void startAnimation(View view, final int campaignId) {
+        if (view == null) return;
+        ObjectAnimator animator = ObjectAnimator.ofFloat(view, "rotationX", 0.0F, 360.0F).setDuration(1000);
+        animator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                Intent intent = new Intent(getActivity(), WaresActivity.class);
+                intent.putExtra(WaresActivity.CAMPAIGN_ID, campaignId);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        animator.start();
     }
 
     @Override
