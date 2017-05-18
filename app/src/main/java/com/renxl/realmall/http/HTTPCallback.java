@@ -25,4 +25,9 @@ public abstract class HTTPCallback<T> extends BaseCallback<T> {
     public void mock(T mock) {
 
     }
+
+    @Override
+    public void tokenError() {
+
+    }
 }

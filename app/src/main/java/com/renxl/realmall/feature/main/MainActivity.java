@@ -1,7 +1,6 @@
 package com.renxl.realmall.feature.main;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -30,6 +29,7 @@ public class MainActivity extends BaseActivity {
     private FragmentTabHost mTabHost;
 
     private CartFragment mCartFragment;
+    private MineFragment mineFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,18 +61,33 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onTabChanged(String tabId) {
                 if (getString(R.string.cart).equals(tabId)) {
-                    if (mCartFragment == null) {
-                        Fragment fragment = getSupportFragmentManager().findFragmentByTag(getString(R.string.cart));
-                        if (fragment != null) {
-                            mCartFragment = (CartFragment) fragment;
-                            mCartFragment.refData();
-                        }
-                    } else {
-                        mCartFragment.refData();
-                    }
+                    cartSelected();
+                } else if (getString(R.string.mine).equals(tabId)) {
+                    mineSelected();
                 }
             }
         });
+    }
+
+    private void mineSelected() {
+        if (mineFragment == null) {
+            Fragment fragment = getSupportFragmentManager().findFragmentByTag(getString(R.string.mine));
+            if (fragment != null) mineFragment = (MineFragment) fragment;
+        } else {
+
+        }
+    }
+
+    private void cartSelected() {
+        if (mCartFragment == null) {
+            Fragment fragment = getSupportFragmentManager().findFragmentByTag(getString(R.string.cart));
+            if (fragment != null) {
+                mCartFragment = (CartFragment) fragment;
+                mCartFragment.refData();
+            }
+        } else {
+            mCartFragment.refData();
+        }
     }
 
     private void addTab(Tab tab) {

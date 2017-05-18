@@ -1,11 +1,15 @@
 package com.renxl.realmall.application;
 
 import android.annotation.SuppressLint;
+import android.app.ActivityManager;
 import android.app.Application;
+import android.content.Context;
+import android.text.format.Formatter;
 import android.widget.TextView;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.stetho.Stetho;
+import com.renxl.realmall.utils.Log;
 import com.squareup.leakcanary.LeakCanary;
 
 /**
@@ -27,10 +31,15 @@ public class RealMallApp extends Application {
         super.onCreate();
         instance = this;
         initUtils();
+    }
 
+    public static Application getContext() {
+        return instance;
     }
 
     private void initUtils() {
+        // 添加为捕获异常监听
+        CrashHandler.getInstance().init(this);
         // Stetho 网络监测工具初始化
         Stetho.initializeWithDefaults(this);
         // 内存泄漏工具
@@ -39,7 +48,7 @@ public class RealMallApp extends Application {
         Fresco.initialize(this);
     }
 
-    public static Application getContext() {
-        return instance;
+    private String formatData(long fileData) {
+        return Formatter.formatFileSize(this, fileData);
     }
 }

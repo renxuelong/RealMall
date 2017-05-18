@@ -6,7 +6,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="translucent">#00000000</color>
 
-    <color name="gray_divader">#F5F5F5</color>
+    <color name="gray_divider">#F5F5F5</color>
 
     <color name="red_btn_normal">#ffff5454</color>
     <color name="red_btn_pressed">#ffd24242</color>

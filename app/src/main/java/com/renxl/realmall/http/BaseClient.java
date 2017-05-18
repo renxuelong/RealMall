@@ -1,6 +1,11 @@
 package com.renxl.realmall.http;
 
+import android.content.Context;
 import android.text.TextUtils;
+
+import com.renxl.realmall.application.Constants;
+import com.renxl.realmall.application.RealMallApp;
+import com.renxl.realmall.feature.sign_in.UserLocalData;
 
 /**
  * Created by renxl
@@ -8,6 +13,8 @@ import android.text.TextUtils;
  */
 
 public abstract class BaseClient {
+
+    protected Context context;
 
     public abstract String getHost();
 
@@ -54,5 +61,13 @@ public abstract class BaseClient {
 
     public void post(String url, RequestParams params, HTTPCallback callback, boolean cache) {
         RequestManager.sendRequest(RequestManager.POST, getAbsoluteUrl(url), params, callback, cache);
+    }
+
+    public RequestParams getTokenParams(RequestParams params) {
+        if (params == null) {
+            params = new RequestParams();
+        }
+        params.put(Constants.TOKEN, UserLocalData.getToken(RealMallApp.getContext()));
+        return params;
     }
 }

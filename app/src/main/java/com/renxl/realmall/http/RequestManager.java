@@ -11,7 +11,6 @@ import com.renxl.realmall.BuildConfig;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Set;
 
 import okhttp3.Call;
@@ -32,6 +31,9 @@ import okhttp3.Response;
 class RequestManager {
     static final int GET = 1;
     static final int POST = 2;
+    private static final int TOKEN_LOSE = 401;
+    private static final int TOKEN_ERROR = 402;
+    private static final int TOKEN_OVERDUE = 403;
     private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
     private static final String TAG = "RequestManager";
 
@@ -50,11 +52,6 @@ class RequestManager {
     /**
      * 进行网络请求的调用方法
      * 禁止 APP 中的请求直接访问该方法，必须通过 RealMallClient
-     *
-     * @param method
-     * @param url
-     * @param requestParams
-     * @param callback
      */
     static void sendRequest(int method, final String url, RequestParams requestParams, final BaseCallback callback, boolean cache) {
         execute(url, callback, getRequest(method, url, requestParams, callback, cache, getRequestBody(requestParams)));
@@ -83,13 +80,14 @@ class RequestManager {
                     throw new RuntimeException("Callback 为 null");
 
                 if (response.isSuccessful()) {
+                    callbackOnSuccess(result, callback, url);
+                } else if (response.code() == TOKEN_LOSE || response.code() == TOKEN_ERROR || response.code() == TOKEN_OVERDUE) {
                     mHandler.post(new Runnable() {
                         @Override
                         public void run() {
-                            callback.ok(getResponseByResult(result, callback));
+                            callback.tokenError();
                         }
                     });
-                    HTTPFileCache.put(url, result);
                 }
             }
 
@@ -114,6 +112,16 @@ class RequestManager {
         });
     }
 
+    private static void callbackOnSuccess(final String result, final BaseCallback callback, String url) {
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                callback.ok(getResponseByResult(result, callback));
+            }
+        });
+        HTTPFileCache.put(url, result);
+    }
+
     /**
      * 获取返回数据类型的方法
      */
@@ -123,14 +131,6 @@ class RequestManager {
 
     /**
      * 请求参数为 RequestParams 时构造请求 Request
-     * * @param method
-     *
-     * @param url
-     * @param requestParams
-     * @param callback
-     * @param cache
-     * @param body
-     * @return
      */
     private static Request getRequest(int method, String url, RequestParams requestParams, final BaseCallback callback, boolean cache, RequestBody body) {
         Request request;
@@ -151,29 +151,20 @@ class RequestManager {
 
     /**
      * Post 参数为 Json 时的 RequestBody 构造
-     *
-     * @param json
-     * @return
      */
     private static RequestBody getRequestBody(String json) {
-        RequestBody requestBody = RequestBody.create(JSON, json);
-        return requestBody;
+        return RequestBody.create(JSON, json);
     }
 
     /**
      * Post 请求参数为 RequestParams 时的 RequestBody 构造
-     *
-     * @param requestParams
-     * @return
      */
     private static RequestBody getRequestBody(RequestParams requestParams) {
         FormBody.Builder builder = new FormBody.Builder();
         if (requestParams != null && requestParams.params != null) {
             HashMap<String, Object> params = (HashMap<String, Object>) requestParams.params;
             Set<String> keys = params.keySet();
-            Iterator<String> iterator = keys.iterator();
-            while (iterator.hasNext()) {
-                String key = iterator.next();
+            for (String key : keys) {
                 String value = String.valueOf(params.get(key));
                 builder.add(key, value);
             }

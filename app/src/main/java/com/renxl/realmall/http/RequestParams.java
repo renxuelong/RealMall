@@ -8,7 +8,6 @@ import org.json.JSONObject;
 import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -93,15 +92,12 @@ public class RequestParams {
         StringBuilder stringBuilder = new StringBuilder();
         Set<String> keySet = params.keySet();
 
-        Iterator iterator = keySet.iterator();
-
-        while (iterator.hasNext()) {
+        for (String aKeySet : keySet) {
             if (stringBuilder.length() > 0) stringBuilder.append("&");
 
-            String key = (String) iterator.next();
-            String value = String.valueOf(params.get(key));
+            String value = String.valueOf(params.get(aKeySet));
 
-            stringBuilder.append(URLEncoder.encode(key));
+            stringBuilder.append(URLEncoder.encode(aKeySet));
             stringBuilder.append("=");
             stringBuilder.append(URLEncoder.encode(value));
         }
@@ -117,7 +113,7 @@ public class RequestParams {
     public String toQueryString(String url) {
         String paramString = getEncodedParamString();
         if (TextUtils.isEmpty(paramString)) return url;
-        if (url.indexOf("?") == -1) {
+        if (!url.contains("?")) {
             url += "?" + paramString;
         } else {
             url += "&" + paramString;

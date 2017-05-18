@@ -1,6 +1,6 @@
 package com.renxl.realmall.feature.hot;
 
-import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
@@ -16,13 +16,13 @@ import com.renxl.realmall.R;
 import com.renxl.realmall.base.BaseFragment;
 import com.renxl.realmall.base.BaseViewHolder;
 import com.renxl.realmall.feature.category.Wares;
+import com.renxl.realmall.feature.wares_detail.WareDetailActivity;
 import com.renxl.realmall.utils.Toast;
 import com.renxl.realmall.widget.ToolBar;
 
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
@@ -49,13 +49,15 @@ public class HotFragment extends BaseFragment implements HotConstract.IHotView<L
     private HotConstract.IHotPresenter<Wares> mHotPresenter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.fragment_hot, null, false);
+    protected View onCreate(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_hot, null, false);
+    }
+
+    @Override
+    protected void init() {
         mHotPresenter = new HotPresenter(this, getContext());
         mHotPresenter.start();
-        unbinder = ButterKnife.bind(this, view);
         initSwipeRefresh();
-        return view;
     }
 
     private void initSwipeRefresh() {
@@ -132,18 +134,14 @@ public class HotFragment extends BaseFragment implements HotConstract.IHotView<L
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
-
-    @Override
     public void loadAll() {
         srlHot.finishRefreshLoadMore();
     }
 
     @Override
     public void onItemClick(int position) {
-        Toast.show(adapter.getDatas().get(position).getName() + "");
+        Intent intent = new Intent(getActivity(), WareDetailActivity.class);
+        intent.putExtra(WareDetailActivity.EXTRA_WARES, adapter.getDatas().get(position));
+        startActivity(intent);
     }
 }

@@ -1,5 +1,6 @@
 package com.renxl.realmall.feature.cart;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,13 +14,15 @@ import android.widget.TextView;
 
 import com.renxl.realmall.R;
 import com.renxl.realmall.base.BaseFragment;
+import com.renxl.realmall.feature.sign_in.LoginActivity;
+import com.renxl.realmall.feature.sign_in.UserLocalData;
+import com.renxl.realmall.utils.Toast;
 import com.renxl.realmall.widget.ToolBar;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
@@ -51,14 +54,12 @@ public class CartFragment extends BaseFragment implements CartContract.ICartView
     private CartAdapter mAdapter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_cart, null);
-        unbinder = ButterKnife.bind(this, view);
-        initView(view);
-        return view;
+    protected View onCreate(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_cart, null);
     }
 
-    private void initView(View view) {
+    @Override
+    protected void init() {
         mCartPresenter = new CartPresenter(this, getContext());
         mCartPresenter.start();
         cartToolbar.setTag(STATE_COMPLETE);
@@ -156,6 +157,7 @@ public class CartFragment extends BaseFragment implements CartContract.ICartView
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_cart_pay:
+                toPay();
                 break;
             case R.id.btn_cart_del:
                 mAdapter.delete();
@@ -163,10 +165,20 @@ public class CartFragment extends BaseFragment implements CartContract.ICartView
         }
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
+    private void toPay() {
+        List<CartBean> lists = CartProvider.getInstance().getCheckedCarBeanList();
+        if(lists == null || lists.size() <= 0) {
+            Toast.show("请选择需要结算的商品");
+            return;
+        }
+
+        Intent jumpIntent = new Intent(getActivity(), FillOrderActivity.class);
+        if (UserLocalData.getUser(getContext()) == null) {
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            intent.putExtra(LoginActivity.JUMP_INTENT, jumpIntent);
+            startActivity(intent);
+        } else
+            startActivity(jumpIntent);
     }
 
     public void refData() {

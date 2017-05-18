@@ -97,10 +97,30 @@ public class CartProvider {
         return lists;
     }
 
+    public List<CartBean> getCheckedCarBeanList() {
+        List<CartBean> cartBeanList = getCartBeanList();
+        List<CartBean> wares = new ArrayList<>();
+        for (CartBean cartBean : cartBeanList) {
+            if (cartBean.isChecked()) wares.add(cartBean);
+        }
+        return wares;
+    }
+
     private List<CartBean> getListFromLocal() {
         String json = SharedPreferencesUtils.getString(mContext, CART_KEY);
         if (TextUtils.isEmpty(json)) return null;
         return JsonUtils.fromJson(json, new TypeToken<List<CartBean>>() {
         }.getType());
+    }
+
+    public float totalPrice() {
+        float price = 0;
+        List<CartBean> datas = getCartBeanList();
+        for (CartBean data : datas) {
+            if (data.isChecked()) {
+                price += data.getmCount() * data.getPrice();
+            }
+        }
+        return price;
     }
 }

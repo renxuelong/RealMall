@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.renxl.realmall">
-    // 网络
+
+    <!-- 网络 -->
     <uses-permission android:name="android.permission.INTERNET" />
-    // 检查网络状态
+    <!-- 检查网络状态 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    // 读写权限
+    <!-- 读写权限 -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!-- ShareSDK 所需权限 -->
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:name=".application.RealMallApp"
@@ -16,6 +23,14 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="mob_sms_appKey"
+            android:value="1de28e603c6f9" />
+        <meta-data
+            android:name="mob_sms_appSecret"
+            android:value="20dc15638258928f46c642eac690b90c" />
+
         <activity
             android:name=".feature.main.MainActivity"
             android:theme="@style/translucent">
@@ -27,6 +42,41 @@
         </activity>
         <activity android:name=".feature.wares_list.WaresActivity" />
         <activity android:name=".feature.wares_detail.WareDetailActivity" />
+        <activity android:name=".feature.sign_in.SignUpActivity" />
+        <activity android:name=".feature.sign_in.SignUp2Activity" />
+        <activity android:name=".feature.sign_in.LoginActivity" />
+        <activity android:name=".feature.cart.FillOrderActivity" />
+
+        <!-- ShareSDK -->
+        <activity
+            android:name="com.mob.tools.MobUIShell"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <data android:scheme="tencent100371282" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+            <!-- 调用新浪原生SDK，需要注册的回调activity -->
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- 微信分享回调 -->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
     </application>
 
 </manifest>

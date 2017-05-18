@@ -1,12 +1,11 @@
 package com.renxl.realmall.feature.category;
 
 import com.renxl.realmall.application.Constants;
-import com.renxl.realmall.base.BaseBean;
+import com.renxl.realmall.base.BasePageBean;
 import com.renxl.realmall.feature.home.Advertising;
 import com.renxl.realmall.http.HTTPCallback;
 import com.renxl.realmall.http.RealMallClient;
 import com.renxl.realmall.http.RequestParams;
-import com.renxl.realmall.utils.Log;
 
 import java.util.List;
 
@@ -67,9 +66,9 @@ class CategoryPresenter implements CategoryContract.ICategoryPresenter {
         RequestParams requestParams = new RequestParams();
         requestParams.put("categoryId", 1);
 
-        RealMallClient.getInstance().get(Constants.CATEGORY, new HTTPCallback<BaseBean<Wares>>() {
+        RealMallClient.getInstance().get(Constants.CATEGORY, new HTTPCallback<BasePageBean<Wares>>() {
             @Override
-            public void ok(BaseBean<Wares> response) {
+            public void ok(BasePageBean<Wares> response) {
                 if (response == null || response.getList() == null || response.getList().size() <= 0) {
                     mCategoryView.fail();
                     return;
@@ -114,9 +113,9 @@ class CategoryPresenter implements CategoryContract.ICategoryPresenter {
         requestParams.put("categoryId", mCategoryId);
         requestParams.put("curPage", mCurPage);
         requestParams.put("pageSize", PAGE_SIZE);
-        RealMallClient.getInstance().get(Constants.CATEGORY_WARES, requestParams, new HTTPCallback<BaseBean<Wares>>() {
+        RealMallClient.getInstance().get(Constants.CATEGORY_WARES, requestParams, new HTTPCallback<BasePageBean<Wares>>() {
             @Override
-            public void ok(BaseBean<Wares> response) {
+            public void ok(BasePageBean<Wares> response) {
                 totalPage = response.getTotalPage();
                 mCategoryView.showWares(response.getList());
 

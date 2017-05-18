@@ -18,7 +18,7 @@ abstract class BaseCallback<T> {
         mType = getSuperclassTypeParameter(getClass());
     }
 
-    private static Type getSuperclassTypeParameter(Class<?> subclass) {
+    static Type getSuperclassTypeParameter(Class<?> subclass) {
         Type superclass = subclass.getGenericSuperclass();
         if (superclass instanceof Class) {
             throw new RuntimeException("Missing type parameter.");
@@ -34,6 +34,8 @@ abstract class BaseCallback<T> {
     public abstract void ok(T response);
 
     public abstract void fail(String errorMessage);
+
+    public abstract void tokenError();
 
     public abstract void mock(T mock);
 

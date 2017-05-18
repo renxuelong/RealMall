@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.cjj.MaterialRefreshLayout;
 import com.cjj.MaterialRefreshListener;
-import com.renxl.realmall.base.BaseBean;
+import com.renxl.realmall.base.BasePageBean;
 import com.renxl.realmall.http.HTTPCallback;
 import com.renxl.realmall.http.RealMallClient;
 import com.renxl.realmall.http.RequestParams;
@@ -90,9 +90,9 @@ public class Pager {
     }
 
     public <T> void requestData() {
-        HTTPCallback httpCallback = new HTTPCallback<BaseBean<T>>() {
+        HTTPCallback httpCallback = new HTTPCallback<BasePageBean<T>>() {
             @Override
-            public void ok(BaseBean<T> response) {
+            public void ok(BasePageBean<T> response) {
 
                 totalPage = response.getTotalPage();
 

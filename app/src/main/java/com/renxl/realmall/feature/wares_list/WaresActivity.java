@@ -16,9 +16,8 @@ import com.renxl.realmall.R;
 import com.renxl.realmall.application.Constants;
 import com.renxl.realmall.base.AddCartAdapter;
 import com.renxl.realmall.base.BaseActivity;
-import com.renxl.realmall.base.BaseBean;
+import com.renxl.realmall.base.BasePageBean;
 import com.renxl.realmall.base.BaseViewHolder;
-import com.renxl.realmall.feature.cart.CartBean;
 import com.renxl.realmall.feature.cart.CartProvider;
 import com.renxl.realmall.feature.category.Wares;
 import com.renxl.realmall.feature.hot.HotAdapter;
@@ -115,7 +114,7 @@ public class WaresActivity extends BaseActivity implements Pager.OnPageListener<
     }
 
     private void initPage() {
-        pager = new Pager.Builder(new TypeToken<BaseBean<Wares>>() {
+        pager = new Pager.Builder(new TypeToken<BasePageBean<Wares>>() {
         }.getType())
                 .setRefreshLayout(refreshWares)
                 .setCanLoadMore(true)
@@ -125,6 +124,7 @@ public class WaresActivity extends BaseActivity implements Pager.OnPageListener<
                 .putParams(CAMPAIGN_ID, campaignId)
                 .putParams(ORDER_BY, ORDER_DEFAULT)
                 .build();
+        showLoading();
         pager.start();
     }
 
@@ -165,6 +165,7 @@ public class WaresActivity extends BaseActivity implements Pager.OnPageListener<
                 }
                 pager.putParam(Pager.PARAM_CUR_PAGE, 1);
                 pager.setStatus(Pager.STATE_REFRESH);
+                showLoading();
                 pager.requestData();
             }
 
@@ -182,6 +183,7 @@ public class WaresActivity extends BaseActivity implements Pager.OnPageListener<
 
     @Override
     public void load(List<Wares> list, int totalPage, int totalCount) {
+        hideLoading();
         tvListSize.setText("共有 " + totalCount + "件商品");
         if (list == null || totalCount <= 0) return;
 
@@ -206,6 +208,7 @@ public class WaresActivity extends BaseActivity implements Pager.OnPageListener<
 
     @Override
     public void refresh(List<Wares> list, int totalPage, int totalCount) {
+        hideLoading();
         if (list == null || totalCount <= 0) return;
 
         tvListSize.setText("共有 " + totalCount + "件商品");
@@ -216,6 +219,7 @@ public class WaresActivity extends BaseActivity implements Pager.OnPageListener<
 
     @Override
     public void loadMore(List<Wares> list, int totalPage, int totalCount) {
+        hideLoading();
         adapter.setData(list);
         refreshWares.finishRefreshLoadMore();
         tvListSize.setText("共有 " + totalCount + "件商品");

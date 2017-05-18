@@ -1,6 +1,6 @@
 package com.renxl.realmall.feature.category;
 
-import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +19,7 @@ import com.renxl.realmall.R;
 import com.renxl.realmall.base.BaseFragment;
 import com.renxl.realmall.base.BaseViewHolder;
 import com.renxl.realmall.feature.home.Advertising;
+import com.renxl.realmall.feature.wares_detail.WareDetailActivity;
 import com.renxl.realmall.utils.Toast;
 import com.renxl.realmall.widget.GridDecoration;
 import com.renxl.realmall.widget.ToolBar;
@@ -26,7 +27,6 @@ import com.renxl.realmall.widget.ToolBar;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
@@ -57,21 +57,15 @@ public class CategoryFragment extends BaseFragment implements CategoryContract.I
     private WaresAdapter mWaresAdapter;
     private CategoryContract.ICategoryPresenter mCategoryPresenter;
 
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.fragment_category, null);
-        unbinder = ButterKnife.bind(this, view);
-
-        mCategoryPresenter = new CategoryPresenter(this);
-        mCategoryPresenter.start();
-
-        initView();
-
-        return view;
+    protected View onCreate(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_category, null);
     }
 
-
-    private void initView() {
+    protected void init() {
+        mCategoryPresenter = new CategoryPresenter(this);
+        mCategoryPresenter.start();
         mrlCategoryWares.setLoadMore(true);
         mrlCategoryWares.setMaterialRefreshListener(new MaterialRefreshListener() {
             @Override
@@ -133,8 +127,9 @@ public class CategoryFragment extends BaseFragment implements CategoryContract.I
                 mWaresAdapter.setOnItemClickListener(new BaseViewHolder.OnItemClickListener() {
                     @Override
                     public void onItemClick(int position) {
-                        if (!TextUtils.isEmpty(mWaresAdapter.getDatas().get(position).getName()))
-                            Toast.show(mWaresAdapter.getDatas().get(position).getName());
+                        Intent intent = new Intent(getActivity(), WareDetailActivity.class);
+                        intent.putExtra(WareDetailActivity.EXTRA_WARES, mWaresAdapter.getDatas().get(position));
+                        startActivity(intent);
                     }
                 });
                 recycleviewCategoryWares.setAdapter(mWaresAdapter);
@@ -168,12 +163,6 @@ public class CategoryFragment extends BaseFragment implements CategoryContract.I
     public void onStop() {
         super.onStop();
         slCategory.stopAutoCycle();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 
     @Override

@@ -135,19 +135,8 @@ class CartAdapter extends BaseAdapter<CartBean> {
     }
 
     void showTotalPrice() {
-        String text = mContext.getString(R.string.total) + " " + totalPrice();
+        String text = mContext.getString(R.string.total) + " " + CartProvider.getInstance().totalPrice();
         tvTotal.setText(text);
-    }
-
-    private float totalPrice() {
-        float price = 0;
-        List<CartBean> datas = getDatas();
-        for (CartBean data : datas) {
-            if (data.isChecked()) {
-                price += data.getmCount() * data.getPrice();
-            }
-        }
-        return price;
     }
 
     interface Listener {

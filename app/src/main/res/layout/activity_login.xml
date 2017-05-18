@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/md_grey_50"
+    android:orientation="vertical">
+
+    <com.renxl.realmall.widget.ToolBar
+        android:id="@+id/toolbar_sign_in"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:minHeight="?attr/actionBarSize"
+        app:navigationIcon="@drawable/icon_back"
+        app:title_text="@string/sign_in" />
+
+    <EditText
+        android:id="@+id/et_login_phone"
+        style="@style/sign_input"
+        android:layout_marginTop="20dp"
+        android:drawableLeft="@drawable/icon_phone"
+        android:hint="@string/input_number"
+        android:inputType="phone" />
+
+    <EditText
+        android:id="@+id/et_login_psw"
+        style="@style/sign_input"
+        android:drawableLeft="@drawable/icon_lock"
+        android:hint="@string/input_password"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_margin="20dp"
+        android:background="@drawable/selector_red_btn"
+        android:text="@string/sign_in"
+        android:textColor="@color/white" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/tv_login_sign_up"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="left"
+            android:text="注册账号"
+            android:textColor="@color/blue" />
+
+        <TextView
+            android:id="@+id/tv_login_reset_pwd"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="@string/forgot_pwd"
+            android:textColor="@color/blue" />
+
+    </LinearLayout>
+
+</LinearLayout>

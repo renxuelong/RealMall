@@ -70,7 +70,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
 
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(layoutId, null, false);
+        View view = LayoutInflater.from(mContext).inflate(layoutId, parent, false);
         return new BaseViewHolder(view, onItemClickListener);
     }
 

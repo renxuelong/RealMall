@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <com.renxl.realmall.widget.ToolBar
+        android:id="@+id/toolbar_fill_order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:minHeight="?attr/actionBarSize"
+        app:navigationIcon="@drawable/icon_back"
+        app:title_text="@string/fill_order" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar_fill_order">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="@color/md_grey_200" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+
+                <TextView
+                    android:id="@+id/tv_fill_order_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/tv_fill_order_address"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignStart="@+id/tv_fill_order_address"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/normalTextSize"
+                    tools:ignore="RelativeOverlap"
+                    tools:text="15632279639" />
+
+                <TextView
+                    android:id="@+id/tv_fill_order_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_fill_order_phone"
+                    android:layout_margin="5dp"
+                    tools:text="北京市东城区长安街 1 号院 2 号楼 3 单元 4 楼 405 室" />
+
+                <ImageView
+                    android:id="@+id/img_fill_order_choose_address"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/right_arrow"
+                    tools:ignore="ContentDescription" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="@color/md_grey_200" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/order_wares"
+                android:textSize="@dimen/normalTextSize" />
+
+            <View style="@style/divider_margin10" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_fill_order_wares"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="@color/md_grey_200" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/pay_way"
+                android:textSize="@dimen/normalTextSize" />
+
+            <View style="@style/divider_margin10" />
+
+            <LinearLayout
+                android:id="@+id/layout_ali"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:tag="@string/alipay">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/icon_alipay_72"
+                    tools:ignore="ContentDescription" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/alipay"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/normalTextSize"
+                        tools:ignore="RelativeOverlap" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/support_alipay" />
+                </LinearLayout>
+
+                <RadioButton
+                    android:id="@+id/radioBtn_ali"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/selector_btn_pay_way"
+                    android:button="@null"
+                    android:checked="true"
+                    android:clickable="false"
+                    android:gravity="center_vertical" />
+
+            </LinearLayout>
+
+            <View style="@style/divider_margin10" />
+
+            <LinearLayout
+                android:id="@+id/layout_wx"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:tag="@string/wx_pay">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/icon_wechat_72"
+                    tools:ignore="ContentDescription" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/wx_pay"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/normalTextSize"
+                        tools:ignore="RelativeOverlap" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/support_wx_pay" />
+                </LinearLayout>
+
+                <RadioButton
+                    android:id="@+id/radioBtn_wx"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/selector_btn_pay_way"
+                    android:button="@null"
+                    android:checked="false"
+                    android:clickable="false"
+                    android:gravity="center_vertical" />
+
+            </LinearLayout>
+
+            <View style="@style/divider_margin10" />
+
+            <LinearLayout
+                android:id="@+id/layout_bd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:tag="@string/bd_pay">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/icon_bd_72"
+                    tools:ignore="ContentDescription" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/bd_pay"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/normalTextSize"
+                        tools:ignore="RelativeOverlap" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/support_bd_pay" />
+                </LinearLayout>
+
+                <RadioButton
+                    android:id="@+id/radioBtn_bd"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/selector_btn_pay_way"
+                    android:button="@null"
+                    android:checked="false"
+                    android:clickable="false"
+                    android:gravity="center_vertical" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/md_grey_400">
+
+        <TextView
+            android:id="@+id/tv_fill_order_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/normalTextSize"
+            tools:text="应付款：¥ 1627.0" />
+
+        <Button
+            android:id="@+id/btn_fill_submit"
+            style="@style/btn_submit"
+            android:text="@string/submit_order" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

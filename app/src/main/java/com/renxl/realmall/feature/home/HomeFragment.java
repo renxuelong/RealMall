@@ -25,7 +25,6 @@ import com.renxl.realmall.widget.ToolBar;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
@@ -44,19 +43,16 @@ public class HomeFragment extends BaseFragment implements HomeContract.IHomeView
     RecyclerView recycleviewHome;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        HomeContract.IHomePresenter homePresenter = new HomePresenter(this);
-        homePresenter.start();
-
+    protected View onCreate(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.fragment_home, null);
-        initView(view);
-
         return view;
     }
 
-    private View initView(View view) {
-        unbinder = ButterKnife.bind(this, view);
+    @Override
+    protected void init() {
+        HomeContract.IHomePresenter homePresenter = new HomePresenter(this);
+        homePresenter.start();
+
         toolbarHome.setToolbarListener(new ToolBar.ToolbarListener() {
             @Override
             public void onSearchClick() {
@@ -68,13 +64,6 @@ public class HomeFragment extends BaseFragment implements HomeContract.IHomeView
                 Toast.show("onRightClick");
             }
         });
-        return view;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 
     @Override

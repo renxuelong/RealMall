@@ -17,7 +17,7 @@
         android:cursorVisible="false"
         android:drawableLeft="@drawable/icon_search"
         android:focusableInTouchMode="false"
-        android:hint="请输入搜索内容"
+        android:hint="@string/enter_search"
         android:padding="6dp"
         android:visibility="gone" />
 
@@ -35,8 +35,8 @@
     <Button
         android:id="@+id/btn_main_toolbar_right"
         style="@android:style/Widget.Material.Toolbar.Button.Navigation"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:gravity="center"
         android:textColor="@color/white"

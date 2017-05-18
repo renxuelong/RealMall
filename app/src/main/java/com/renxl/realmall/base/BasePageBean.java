@@ -7,7 +7,7 @@ import java.util.List;
  * On 2017/4/1 18:10.
  */
 
-public class BaseBean<T> {
+public class BasePageBean<T> {
     private int currentPage;
     private int pageSize;
     private int totalPage;
@@ -56,7 +56,7 @@ public class BaseBean<T> {
 
     @Override
     public String toString() {
-        return "BaseBean{" +
+        return "BasePageBean{" +
                 "currentPage=" + currentPage +
                 ", pageSize=" + pageSize +
                 ", totalPage=" + totalPage +
