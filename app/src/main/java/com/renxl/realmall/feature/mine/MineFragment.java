@@ -45,6 +45,7 @@ public class MineFragment extends BaseFragment {
 
     @Override
     protected void init() {
+        showUser();
     }
 
     public void showUser() {
