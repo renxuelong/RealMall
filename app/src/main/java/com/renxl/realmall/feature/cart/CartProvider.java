@@ -123,4 +123,11 @@ public class CartProvider {
         }
         return price;
     }
+
+    public void clearCheckedCart() {
+        List<CartBean> cartBeanList = getCartBeanList();
+        for (CartBean cartBean : cartBeanList) {
+            if (cartBean.isChecked()) delete(cartBean);
+        }
+    }
 }

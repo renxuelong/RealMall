@@ -34,10 +34,6 @@ public class UserLocalData {
 
     public static void clearUser(Context context) {
         putUser(context, null);
+        putToken(context, null);
     }
-
-    public static void clearToken(Context context) {
-        putToken(context, "");
-    }
-
 }

@@ -46,7 +46,7 @@ public class ToolBar extends Toolbar {
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ToolBar);
         String titleText = ta.getString(R.styleable.ToolBar_title_text);
         if (!TextUtils.isEmpty(titleText)) {
-            setTitle(titleText);
+            setTitleText(titleText);
         }
 
         boolean isSearchShow = ta.getBoolean(R.styleable.ToolBar_title_search, false);
@@ -81,7 +81,7 @@ public class ToolBar extends Toolbar {
         rightBtn.setVisibility(VISIBLE);
     }
 
-    public void setTitle(String title) {
+    public void setTitleText(String title) {
         titleEt.setVisibility(GONE);
         titleTv.setVisibility(VISIBLE);
         titleTv.setText(title);

@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.renxl.realmall.R;
 import com.renxl.realmall.base.BaseFragment;
+import com.renxl.realmall.feature.orders.AddressListActivity;
+import com.renxl.realmall.feature.orders.OrderListActivity;
 import com.renxl.realmall.feature.sign_in.LoginActivity;
 import com.renxl.realmall.feature.sign_in.User;
 import com.renxl.realmall.feature.sign_in.UserLocalData;
@@ -29,7 +31,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MineFragment extends BaseFragment {
 
     public static final int REQUEST_CODE = 0;
-    private static final String TAG_LOGIN = "sign_in";
 
     @BindView(R.id.img_mine_avator)
     CircleImageView imgMineAvator;
@@ -37,6 +38,12 @@ public class MineFragment extends BaseFragment {
     TextView tvMineUsername;
     @BindView(R.id.btn_sign_out)
     Button btnSignOut;
+    @BindView(R.id.tv_mine_orders)
+    TextView mTvMineOrders;
+    @BindView(R.id.tv_mine_favorite)
+    TextView mTvMineFavorite;
+    @BindView(R.id.tv_mine_address)
+    TextView mTvMineAddress;
 
     @Override
     public View onCreate(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -52,7 +59,6 @@ public class MineFragment extends BaseFragment {
         User user = UserLocalData.getUser(getContext());
         if (user != null) {
             tvMineUsername.setText(user.getUsername());
-            tvMineUsername.setTag("");
             if (!TextUtils.isEmpty(user.getLogo_url()))
                 Picasso.with(getContext()).load(user.getLogo_url()).into(imgMineAvator);
             else
@@ -60,21 +66,29 @@ public class MineFragment extends BaseFragment {
             btnSignOut.setVisibility(View.VISIBLE);
         } else {
             tvMineUsername.setText(getString(R.string.click_login));
-            tvMineUsername.setTag(TAG_LOGIN);
             imgMineAvator.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.avator));
             btnSignOut.setVisibility(View.GONE);
         }
     }
 
-    @OnClick({R.id.img_mine_avator, R.id.tv_mine_username, R.id.btn_sign_out})
+    @OnClick({R.id.img_mine_avator, R.id.tv_mine_username, R.id.btn_sign_out, R.id.tv_mine_orders, R.id.tv_mine_favorite, R.id.tv_mine_address})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_mine_avator:
             case R.id.tv_mine_username:
-                toLogin();
+                toLoginOrJump(null);
                 break;
             case R.id.btn_sign_out:
                 toSignOut();
+                break;
+            case R.id.tv_mine_orders:
+                toLoginOrJump(OrderListActivity.class);
+                break;
+            case R.id.tv_mine_favorite:
+                toLoginOrJump(FavoriteActivity.class);
+                break;
+            case R.id.tv_mine_address:
+                toLoginOrJump(AddressListActivity.class);
                 break;
         }
     }
@@ -84,11 +98,19 @@ public class MineFragment extends BaseFragment {
         showUser();
     }
 
-    private void toLogin() {
-        String tag = (String) tvMineUsername.getTag();
-        if (TAG_LOGIN.equals(tag)) {
-            startActivityForResult(new Intent(getActivity(), LoginActivity.class), REQUEST_CODE);
+    private void toLoginOrJump(Class clazz) {
+        if (isLogin()) {
+            if (clazz != null) startActivity(new Intent(getActivity(), clazz));
+        } else {
+            Intent intent = new Intent(getActivity(), LoginActivity.class);
+            if (clazz != null)
+                intent.putExtra(LoginActivity.JUMP_INTENT, new Intent(getActivity(), clazz));
+            startActivityForResult(intent, REQUEST_CODE);
         }
+    }
+
+    private boolean isLogin() {
+        return UserLocalData.getUser(getContext()) != null;
     }
 
     @Override
@@ -96,5 +118,4 @@ public class MineFragment extends BaseFragment {
         super.onActivityResult(requestCode, resultCode, data);
         showUser();
     }
-
 }

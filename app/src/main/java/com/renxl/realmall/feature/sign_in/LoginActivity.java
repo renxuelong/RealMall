@@ -16,15 +16,22 @@ import com.renxl.realmall.http.HTTPCallback;
 import com.renxl.realmall.http.RealMallClient;
 import com.renxl.realmall.http.RequestParams;
 import com.renxl.realmall.utils.DESUtil;
+import com.renxl.realmall.utils.Log;
 import com.renxl.realmall.utils.Toast;
 import com.renxl.realmall.widget.ToolBar;
 
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.sina.weibo.SinaWeibo;
+import cn.sharesdk.tencent.qq.QQ;
 
 /**
  * Created by renxl
@@ -54,6 +61,7 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        ShareSDK.initSDK(this);
     }
 
     @Override
@@ -61,7 +69,7 @@ public class LoginActivity extends BaseActivity {
         super.onResume();
     }
 
-    @OnClick({R.id.btn_login, R.id.tv_login_sign_up, R.id.tv_login_reset_pwd})
+    @OnClick({R.id.btn_login, R.id.tv_login_sign_up, R.id.tv_login_reset_pwd, R.id.img_login_qq, R.id.img_login_weibo})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_login:
@@ -72,16 +80,24 @@ public class LoginActivity extends BaseActivity {
                 break;
             case R.id.tv_login_reset_pwd:
                 break;
+            case R.id.img_login_qq:
+                final Platform platform = ShareSDK.getPlatform(QQ.NAME);
+                response(platform);
+                break;
+            case R.id.img_login_weibo:
+                final Platform platfor = ShareSDK.getPlatform(SinaWeibo.NAME);
+                response(platfor);
+                break;
         }
     }
 
     private void doLogin() {
         String phone = etLoginPhone.getText().toString().trim();
-        String pwd = tvLoginResetPwd.getText().toString();
+        String pwd = etLoginPsw.getText().toString().trim();
         if (!checkNumber(phone, pwd)) return;
 
         RequestParams params = new RequestParams();
-        params.put("phone", "+86" + phone);
+        params.put("phone", phone);
         params.put("password", DESUtil.encode(Constants.DES_KEY, pwd));
         RealMallClient.getInstance().post(Constants.USER_SIGN_IN, params, new HTTPCallback<BaseTokenBean<User>>() {
             @Override
@@ -124,5 +140,52 @@ public class LoginActivity extends BaseActivity {
             return false;
         }
         return true;
+    }
+
+    private void response(final Platform platform) {
+        platform.setPlatformActionListener(new PlatformActionListener() {
+
+            @Override
+            public void onError(Platform arg0, int arg1, Throwable arg2) {
+                arg2.printStackTrace();
+                authorize(2, null);
+            }
+
+            @Override
+            public void onComplete(Platform arg0, int arg1, HashMap<String, Object> arg2) {
+                arg0.getDb().exportData();
+                authorize(0, platform);
+            }
+
+            @Override
+            public void onCancel(Platform arg0, int arg1) {
+                arg0.getDb().exportData();
+                authorize(1, null);
+            }
+        });
+        platform.authorize();
+    }
+
+    public void authorize(final int resultId, final Platform platform) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                switch (resultId) {
+                    case 0:
+                        Toast.show("授权成功");
+                        if (platform == null) return;
+                        String accessToken = platform.getDb().getToken(); // 获取授权token
+                        String openId = platform.getDb().getUserId(); // 获取用户在此平台的ID
+                        String nickname = platform.getDb().getUserName(); // 获取用户昵称
+                        Log.i("授权信息" + accessToken + "   " + openId + "   " + nickname);
+                        break;
+                    case 1:
+                        Toast.show("授权取消");
+                        break;
+                    default:
+                        Toast.show("授权失败");
+                }
+            }
+        });
     }
 }

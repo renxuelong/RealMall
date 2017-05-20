@@ -37,6 +37,10 @@ public class RequestParams {
         addParams(key, value);
     }
 
+    public void put(String key, long value) {
+        addParams(key, value);
+    }
+
     public void put(String key, float value) {
         addParams(key, value);
     }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,25 +24,46 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:padding="3dp"
-            android:tag="sign_in"
             android:text="@string/click_login"
             android:textColor="@color/white" />
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tv_mine_orders"
+        style="@style/mint_item"
+        android:layout_marginTop="15dp"
+        android:drawableLeft="@drawable/icon_list"
+        android:text="@string/my_orders"/>
+
     <View
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/white" />
+        style="@style/divider_margin10"
+        android:layout_marginTop="0dp"/>
+
+    <TextView
+        android:id="@+id/tv_mine_favorite"
+        style="@style/mint_item"
+        android:drawableLeft="@drawable/icon_favorite"
+        android:text="@string/my_favorite"/>
+
+    <View
+        style="@style/divider_margin10"
+        android:layout_marginTop="0dp"/>
+
+    <TextView
+        android:id="@+id/tv_mine_address"
+        style="@style/mint_item"
+        android:drawableLeft="@drawable/icon_location"
+        android:text="@string/my_address"/>
 
     <Button
         android:id="@+id/btn_sign_out"
         android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:layout_margin="10dp"
+        android:layout_height="45dp"
+        android:layout_margin="15dp"
         android:background="@drawable/selector_red_btn"
         android:text="@string/sign_out"
         android:textColor="@color/white"
-        android:visibility="gone" />
+        android:visibility="visible"/>
 
 </LinearLayout>

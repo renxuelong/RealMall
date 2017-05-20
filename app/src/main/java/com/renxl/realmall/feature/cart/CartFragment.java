@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.renxl.realmall.R;
 import com.renxl.realmall.base.BaseFragment;
+import com.renxl.realmall.feature.orders.FillOrderActivity;
 import com.renxl.realmall.feature.sign_in.LoginActivity;
 import com.renxl.realmall.feature.sign_in.UserLocalData;
 import com.renxl.realmall.utils.Toast;

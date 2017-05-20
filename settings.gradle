@@ -1,1 +1,1 @@
-include ':app', ':sharesdk', ':SMSSDK-2.1.4', ':SMSSDKGUI-2.1.4'
+include ':app', ':sharesdk', ':SMSSDK-2.1.4', ':SMSSDKGUI-2.1.4', ':bdwallet_pay_sdk', ':paysdk'

@@ -63,7 +63,7 @@ public abstract class BaseClient {
         RequestManager.sendRequest(RequestManager.POST, getAbsoluteUrl(url), params, callback, cache);
     }
 
-    public RequestParams getTokenParams(RequestParams params) {
+    public static RequestParams getTokenParams(RequestParams params) {
         if (params == null) {
             params = new RequestParams();
         }

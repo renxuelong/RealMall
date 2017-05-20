@@ -81,7 +81,12 @@ dependencies {
     // LeakCanary
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.3'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.3'
+    // Location-Picker
+    compile 'liji.library.dev:citypickerview:0.1.0'
+
     compile project(':sharesdk')
     compile project(':SMSSDK-2.1.4')
     compile project(':SMSSDKGUI-2.1.4')
+    compile project(':bdwallet_pay_sdk')
+    compile project(':paysdk')
 }

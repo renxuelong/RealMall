@@ -5,32 +5,10 @@ package com.renxl.realmall.base;
  * On 2017/5/16 15:50.
  */
 
-public class BaseTokenBean<T> {
+public class BaseTokenBean<T> extends BaseBean {
 
-    /**
-     * 数据状态码
-     * <p>1 成功  非 1 失败</p>
-     */
-    private int status;
-    private String message;
     private String token;
     private T data;
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
 
     public String getToken() {
         return token;

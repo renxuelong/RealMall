@@ -45,4 +45,13 @@
     <string name="support_bd_pay">百度安全支付服务</string>
     <string name="submit_order">提交订单</string>
     <string name="input_code">请输入验证码</string>
+    <string name="my_orders">我的订单</string>
+    <string name="my_favorite">我的收藏</string>
+    <string name="my_address">收货地址</string>
+    <string name="recipient">收件人</string>
+    <string name="address">联系地址</string>
+    <string name="detail_address">详细地址</string>
+    <string name="set_default">设为默认</string>
+    <string name="pay_result">支付结果</string>
+    <string name="back_main">返回首页</string>
 </resources>
