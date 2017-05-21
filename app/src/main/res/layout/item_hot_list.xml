@@ -29,10 +29,10 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/tv_hot_list_name"
+            android:layout_alignParentEnd="true"
             android:layout_below="@+id/tv_hot_list_name"
-            android:layout_marginTop="@dimen/largerMarginSize"
-            android:layout_toEndOf="@+id/sdv_hot_list_icon"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="17dp"
             android:layout_toRightOf="@+id/sdv_hot_list_icon">
 
             <TextView
@@ -55,7 +55,35 @@
                 android:background="@drawable/selector_red_btn"
                 android:maxLines="1"
                 android:minHeight="@dimen/largeButtonMinHeight"
-                android:text="@string/buynow" />
+                android:text="@string/buynow"/>
+
+            <TextView
+                android:id="@+id/tv_favorite_list_look"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@color/colorPrimaryDark"
+                android:padding="5dp"
+                android:text="@string/look_like"
+                android:textColor="@color/white"
+                android:textSize="@dimen/smallerTextSize"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/tv_favorite_list_del"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:layout_margin="10dp"
+                android:layout_toLeftOf="@+id/tv_favorite_list_look"
+                android:background="@drawable/bg_favorite_del"
+                android:padding="5dp"
+                android:text="@string/delete"
+                android:textColor="@color/md_grey_700"
+                android:textSize="@dimen/smallerTextSize"
+                android:visibility="gone"/>
+
         </RelativeLayout>
     </RelativeLayout>
 

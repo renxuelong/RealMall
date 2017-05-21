@@ -1,6 +1,7 @@
 package com.renxl.realmall.feature.wares_detail;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ViewGroup;
@@ -12,9 +13,16 @@ import android.webkit.WebViewClient;
 import com.renxl.realmall.R;
 import com.renxl.realmall.application.Constants;
 import com.renxl.realmall.application.RealMallApp;
+import com.renxl.realmall.base.BaseActivity;
+import com.renxl.realmall.base.BaseBean;
 import com.renxl.realmall.feature.cart.CartProvider;
 import com.renxl.realmall.feature.category.Wares;
+import com.renxl.realmall.feature.sign_in.LoginActivity;
+import com.renxl.realmall.feature.sign_in.User;
+import com.renxl.realmall.feature.sign_in.UserLocalData;
 import com.renxl.realmall.http.RealMallClient;
+import com.renxl.realmall.http.RequestParams;
+import com.renxl.realmall.http.TokenCallback;
 import com.renxl.realmall.utils.Log;
 import com.renxl.realmall.utils.Toast;
 import com.renxl.realmall.utils.WebViewUtils;
@@ -25,7 +33,7 @@ import butterknife.ButterKnife;
 import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 
-public class WareDetailActivity extends AppCompatActivity {
+public class WareDetailActivity extends BaseActivity {
 
     public static final String EXTRA_WARES = "wares";
 
@@ -87,6 +95,80 @@ public class WareDetailActivity extends AppCompatActivity {
         });
     }
 
+    private class WebInterface {
+
+        @JavascriptInterface
+        void showDetail() {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Log.i("WebInterface.showDetail");
+                    webWareDetail.loadUrl("javascript:showDetail(" + mWares.getId() + ")");
+                }
+            });
+        }
+
+        @JavascriptInterface
+        public void buy(int id) {
+            addFavorite(id);
+        }
+
+        @JavascriptInterface
+        public void addToCart(int id) {
+            CartProvider.getInstance().putCartBean(mWares);
+            Toast.show("已加入购物车");
+        }
+    }
+
+    private void addFavorite(long id) {
+        User user = UserLocalData.getUser(this);
+        if (user == null) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.putExtra(LoginActivity.EXTRA_RESULT, true);
+            startActivityForResult(intent, REQUEST_CODE);
+            return;
+        }
+
+        RequestParams params = new RequestParams();
+        params.put("user_id", user.getId());
+        params.put("ware_id", mWares.getId());
+        RealMallClient.getInstance().post(Constants.FAVORITE_ADD, RealMallClient.getTokenParams(params), new TokenCallback<BaseBean>(this) {
+            @Override
+            public void ok(BaseBean response) {
+                if (response.getStatus() == 1)
+                    Toast.show("收藏成功");
+                else
+                    fail(response.getMessage());
+            }
+
+            @Override
+            public void fail(String errorMessage) {
+                super.fail(errorMessage);
+                Toast.show("添加收藏失败" + errorMessage);
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) addFavorite(mWares.getId());
+    }
+
+    private class WebClient extends WebViewClient {
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            webInterface.showDetail();
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        WebViewUtils.shutDown(webWareDetail);
+    }
+
     private void showShare() {
 
         Log.i("showShare");
@@ -117,44 +199,5 @@ public class WareDetailActivity extends AppCompatActivity {
 
         // 启动分享GUI
         oks.show(this);
-    }
-
-    private class WebInterface {
-
-        @JavascriptInterface
-        void showDetail() {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Log.i("WebInterface.showDetail");
-                    webWareDetail.loadUrl("javascript:showDetail(" + mWares.getId() + ")");
-                }
-            });
-        }
-
-        @JavascriptInterface
-        public void buy(int id) {
-            Toast.show("购买");
-        }
-
-        @JavascriptInterface
-        public void addToCart(int id) {
-            CartProvider.getInstance().putCartBean(mWares);
-            Toast.show("已加入购物车");
-        }
-    }
-
-    private class WebClient extends WebViewClient {
-        @Override
-        public void onPageFinished(WebView view, String url) {
-            super.onPageFinished(view, url);
-            webInterface.showDetail();
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        WebViewUtils.shutDown(webWareDetail);
     }
 }

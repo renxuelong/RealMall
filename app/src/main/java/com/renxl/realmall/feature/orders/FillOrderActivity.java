@@ -18,6 +18,7 @@ import com.renxl.realmall.R;
 import com.renxl.realmall.application.Constants;
 import com.renxl.realmall.base.BaseActivity;
 import com.renxl.realmall.base.BaseAdapter;
+import com.renxl.realmall.base.BaseBean;
 import com.renxl.realmall.base.BaseViewHolder;
 import com.renxl.realmall.feature.cart.CartBean;
 import com.renxl.realmall.feature.cart.CartProvider;
@@ -25,6 +26,7 @@ import com.renxl.realmall.feature.sign_in.LoginActivity;
 import com.renxl.realmall.feature.sign_in.User;
 import com.renxl.realmall.feature.sign_in.UserLocalData;
 import com.renxl.realmall.feature.wares_detail.WareDetailActivity;
+import com.renxl.realmall.http.BaseClient;
 import com.renxl.realmall.http.RealMallClient;
 import com.renxl.realmall.http.RequestParams;
 import com.renxl.realmall.http.TokenCallback;
@@ -87,6 +89,7 @@ public class FillOrderActivity extends BaseActivity {
     private String payChannel = TAG_AL;
     private long addressId;
     private boolean mJsonCarts;
+    private String orderNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -205,6 +208,7 @@ public class FillOrderActivity extends BaseActivity {
     }
 
     private void requestPay(Order<OrderCharge> response) {
+        orderNumber = response.getData().getOrderNum();
         Pingpp.createPayment(this, JsonUtils.toString(response.getData().getCharge()));
     }
 
@@ -216,7 +220,6 @@ public class FillOrderActivity extends BaseActivity {
         } else if (requestCode == Pingpp.REQUEST_CODE_PAYMENT) {
             onPayResult(data);
         }
-
     }
 
     private void onPayResult(Intent data) {
@@ -230,29 +233,62 @@ public class FillOrderActivity extends BaseActivity {
             */
         String tag = "支付失败";
         boolean success = false;
+        int status = -1;
         if (!TextUtils.isEmpty(result)) {
             switch (result) {
                 case "success":
                     success = true;
+                    status = 1;
                     tag = "支付成功";
                     break;
                 case "fail":
                     tag = "支付失败";
+                    status = -1;
                     break;
                 case "cancel":
                     tag = "取消支付";
+                    status = -2;
                     break;
                 case "invalid":
                     tag = "支付插件未安装";
+                    status = -1;
                     break;
                 case "unknown":
                     tag = "APP 进程异常被杀死";
+                    status = -1;
                     break;
             }
         }
+
+        upDateOrderStatus(success, tag, status);
+    }
+
+    private void upDateOrderStatus(final boolean success, final String tag, final int status) {
+
+        RequestParams params = new RequestParams();
+        params.put("order_num", orderNumber);
+        params.put("status", status);
+        RealMallClient.getInstance().post(Constants.ORDER_COMPLETE, BaseClient.getTokenParams(params), new TokenCallback<BaseBean>(this) {
+            @Override
+            public void ok(BaseBean response) {
+                toPayResult(success, tag);
+            }
+
+            @Override
+            public void fail(String errorMessage) {
+                super.fail(errorMessage);
+                toPayResult(false, errorMessage);
+            }
+        });
+
+
+    }
+
+    private void toPayResult(boolean success, String tag) {
         Intent intent = new Intent(this, PayResultActivity.class);
         intent.putExtra(PayResultActivity.SUCCESS, success);
         intent.putExtra(PayResultActivity.MESSAGE, tag);
+
         startActivity(intent);
         finish();
     }

@@ -32,6 +32,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        android:fullBackupContent="false"
         android:theme="@style/AppTheme">
 
         <meta-data
@@ -44,6 +45,7 @@
         <activity
             android:name=".feature.main.MainActivity"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             android:theme="@style/translucent">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -60,7 +62,7 @@
         <activity android:name=".feature.orders.AddressListActivity"/>
         <activity android:name=".feature.orders.AddressEditActivity"/>
         <activity android:name=".feature.orders.OrderListActivity"/>
-        <activity android:name=".feature.mine.FavoriteActivity"/>
+        <activity android:name=".feature.mine.FavoriteListActivity"/>
         <activity android:name=".feature.orders.PayResultActivity"/>
 
         <!-- ShareSDK -->

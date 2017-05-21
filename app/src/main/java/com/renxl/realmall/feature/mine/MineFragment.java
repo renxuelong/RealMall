@@ -85,7 +85,7 @@ public class MineFragment extends BaseFragment {
                 toLoginOrJump(OrderListActivity.class);
                 break;
             case R.id.tv_mine_favorite:
-                toLoginOrJump(FavoriteActivity.class);
+                toLoginOrJump(FavoriteListActivity.class);
                 break;
             case R.id.tv_mine_address:
                 toLoginOrJump(AddressListActivity.class);

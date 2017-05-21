@@ -40,7 +40,8 @@ import cn.sharesdk.tencent.qq.QQ;
 
 public class LoginActivity extends BaseActivity {
 
-    public static String JUMP_INTENT = "jump_intent";
+    public static final String JUMP_INTENT = "jump_intent";
+    public static final String EXTRA_RESULT = "result";
 
     Button tvLogin;
     @BindView(R.id.toolbar_sign_in)
@@ -120,6 +121,13 @@ public class LoginActivity extends BaseActivity {
     private void loginSuccess(BaseTokenBean<User> response) {
         UserLocalData.putUser(LoginActivity.this, response.getT());
         UserLocalData.putToken(LoginActivity.this, response.getToken());
+
+        boolean result = getIntent().getBooleanExtra(EXTRA_RESULT, false);
+        if (result) {
+            setResult(RESULT_OK);
+            finish();
+        }
+
         Intent jumpIntent = getIntent().getParcelableExtra(JUMP_INTENT);
         if (jumpIntent != null) startActivity(jumpIntent);
         finish();

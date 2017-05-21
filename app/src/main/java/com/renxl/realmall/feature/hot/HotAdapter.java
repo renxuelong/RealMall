@@ -9,7 +9,6 @@ import com.renxl.realmall.R;
 import com.renxl.realmall.base.AddCartAdapter;
 import com.renxl.realmall.base.BaseViewHolder;
 import com.renxl.realmall.feature.category.Wares;
-import com.renxl.realmall.utils.Log;
 import com.renxl.realmall.utils.Toast;
 
 import java.util.List;
@@ -20,6 +19,7 @@ import java.util.List;
  */
 
 public class HotAdapter extends AddCartAdapter<Wares> {
+
     public HotAdapter(List<Wares> datas, Context context, AddBtnClickListener listener) {
         super(datas, context, listener, R.layout.item_hot_list);
         addBtnClickListener = listener;
@@ -38,7 +38,7 @@ public class HotAdapter extends AddCartAdapter<Wares> {
                 String.format(mContext.getString(R.string.pointtwo), item.getPrice())));
 
         if (addBtnClickListener == null) return;
-        if(holder.getButton(R.id.btn_hot_list_add) == null) return;
+        if (holder.getButton(R.id.btn_hot_list_add) == null) return;
         holder.getButton(R.id.btn_hot_list_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

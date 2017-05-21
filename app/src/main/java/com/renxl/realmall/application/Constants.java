@@ -23,6 +23,9 @@ public class Constants {
     public static final String ADDRESS_UPDATE = "/course_api/addr/update";
     public static final String ADDRESS_DELETE = "/course_api/addr/del";
     public static final String ORDER_CREATE = "/course_api/order/create";
-    public static final String ORDER_COMPLETE = "/order/complete";
+    public static final String ORDER_COMPLETE = "/course_api/order/complete";
     public static final String ORDER_LIST = "/course_api/order/list";
+    public static final String FAVORITE_ADD = "/course_api/favorite/create";
+    public static final String FAVORITE_LIST = "/course_api/favorite/list";
+    public static final String FAVORITE_DELETE = "/course_api/favorite/del";
 }

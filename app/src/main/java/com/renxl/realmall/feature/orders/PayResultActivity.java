@@ -9,8 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.renxl.realmall.R;
+import com.renxl.realmall.application.Constants;
 import com.renxl.realmall.base.BaseActivity;
 import com.renxl.realmall.feature.main.MainActivity;
+import com.renxl.realmall.http.RealMallClient;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,6 +26,7 @@ import butterknife.OnClick;
 public class PayResultActivity extends BaseActivity {
     public static final String SUCCESS = "success";
     public static final String MESSAGE = "message";
+
     @BindView(R.id.img_pay_result_icon)
     ImageView mImgPayResultIcon;
     @BindView(R.id.tv_pay_result_message)
@@ -44,6 +47,7 @@ public class PayResultActivity extends BaseActivity {
         Intent intent = getIntent();
         boolean success = intent.getBooleanExtra(SUCCESS, false);
         String message = intent.getStringExtra(MESSAGE);
+
         if (success)
             mImgPayResultIcon.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.icon_success_128));
         else

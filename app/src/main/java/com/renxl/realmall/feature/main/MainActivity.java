@@ -3,6 +3,7 @@ package com.renxl.realmall.feature.main;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,6 +18,7 @@ import com.renxl.realmall.feature.category.CategoryFragment;
 import com.renxl.realmall.feature.home.HomeFragment;
 import com.renxl.realmall.feature.hot.HotFragment;
 import com.renxl.realmall.feature.mine.MineFragment;
+import com.renxl.realmall.utils.Toast;
 import com.renxl.realmall.widget.FragmentTabHost;
 
 import java.util.ArrayList;
@@ -31,11 +33,20 @@ public class MainActivity extends BaseActivity {
     private CartFragment mCartFragment;
     private MineFragment mineFragment;
 
+    private boolean isCart;
+    private long keyBackTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initTab();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if (isCart) refCart();
     }
 
     public void initTab() {
@@ -65,6 +76,8 @@ public class MainActivity extends BaseActivity {
                 } else if (getString(R.string.mine).equals(tabId)) {
                     mineSelected();
                 }
+
+                isCart = getString(R.string.cart).equals(tabId);
             }
         });
     }
@@ -74,11 +87,15 @@ public class MainActivity extends BaseActivity {
             Fragment fragment = getSupportFragmentManager().findFragmentByTag(getString(R.string.mine));
             if (fragment != null) mineFragment = (MineFragment) fragment;
         } else {
-
+            mineFragment.showUser();
         }
     }
 
     private void cartSelected() {
+        refCart();
+    }
+
+    private void refCart() {
         if (mCartFragment == null) {
             Fragment fragment = getSupportFragmentManager().findFragmentByTag(getString(R.string.cart));
             if (fragment != null) {
@@ -101,5 +118,19 @@ public class MainActivity extends BaseActivity {
         imgIcon.setImageResource(tab.getIcon());
         tvTitle.setText(tab.getTitle());
         return view;
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (System.currentTimeMillis() - keyBackTime < 2000)
+                finish();
+            else {
+                Toast.show("再按一次退出 RealMall");
+                keyBackTime = System.currentTimeMillis();
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
