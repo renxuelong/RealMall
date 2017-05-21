@@ -24,7 +24,7 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.realmall
-            shrinkResources true // 资源压缩
+            shrinkResources false // 资源压缩
             minifyEnabled false // 混淆开关
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
