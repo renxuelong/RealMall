@@ -1,1 +1,15 @@
+*.iml
+.gradle
+.idea
+/app/build
+/app/*.iml
+/local.properties
+/.idea/workspace.xml
+/.idea/libraries
+.DS_Store
 /build
+/captures
+.externalNativeBuild
+.classpath
+.project
+proguard-project.txt
