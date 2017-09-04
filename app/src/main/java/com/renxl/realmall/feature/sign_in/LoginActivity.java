@@ -65,10 +65,6 @@ public class LoginActivity extends BaseActivity {
         ShareSDK.initSDK(this);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
 
     @OnClick({R.id.btn_login, R.id.tv_login_sign_up, R.id.tv_login_reset_pwd, R.id.img_login_qq, R.id.img_login_weibo})
     public void onViewClicked(View view) {
